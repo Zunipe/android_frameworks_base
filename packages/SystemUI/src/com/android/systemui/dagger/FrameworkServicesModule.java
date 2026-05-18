@@ -114,6 +114,7 @@ import android.view.autofill.AutofillManager;
 import android.view.inputmethod.InputMethodManager;
 import android.view.textclassifier.TextClassificationManager;
 import android.window.TaskSnapshotManager;
+import android.zunipe.VerificationCodeManager;
 
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.app.NotificationManagerCompat;
@@ -852,5 +853,11 @@ public class FrameworkServicesModule {
     @Nullable
     static AutofillManager provideAutofillManager(Context context) {
         return context.getSystemService(AutofillManager.class);
+    }
+
+    @Provides
+    @Singleton
+    static VerificationCodeManager provideVerificationCodeManager(Context context) {
+        return context.getSystemService(VerificationCodeManager.class);
     }
 }

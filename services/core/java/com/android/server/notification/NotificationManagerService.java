@@ -360,6 +360,7 @@ import android.view.accessibility.AccessibilityManager;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 import android.window.DesktopExperienceFlags;
+import android.zunipe.VerificationCodeManager;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -682,6 +683,7 @@ public class NotificationManagerService extends SystemService {
     @VisibleForTesting
     IPackageManager mPackageManager;
     private PackageManager mPackageManagerClient;
+    private VerificationCodeManager mVerificationCodeManager;
     PackageManagerInternal mPackageManagerInternal;
     private PermissionManager mPermissionManager;
     private PermissionPolicyInternal mPermissionPolicyInternal;
@@ -3549,6 +3551,7 @@ public class NotificationManagerService extends SystemService {
             mPreferencesHelper.migrateNotificationPermissions(mUm.getUsers());
         } else if (phase == SystemService.PHASE_BOOT_COMPLETED) {
             NotificationBitmapJobService.scheduleJob(getContext());
+            mVerificationCodeManager = (VerificationCodeManager) getContext().getSystemService(Context.VERIFICATION_CODE_SERVICE);
         }
     }
 
@@ -10400,6 +10403,9 @@ public class NotificationManagerService extends SystemService {
                                         position, buzzBeepBlinkLoggingCode,
                                         getGroupInstanceId(r.getSbn().getGroupKey()));
                         notifyListenersPostedAndLogLocked(r, old, mTracker, maybeReport);
+                        if (mVerificationCodeManager != null) {
+                            mVerificationCodeManager.onPostNotification(r.getSbn());
+                        }
                         posted = true;
                     } else {
                         Slog.e(TAG, "Not posting notification without small icon: " + notification);

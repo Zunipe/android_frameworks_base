@@ -4535,6 +4535,7 @@ public abstract class Context {
                 HEALTHCONNECT_SERVICE,
                 // @hide: COUNTRY_DETECTOR,
                 SEARCH_SERVICE,
+                VERIFICATION_CODE_SERVICE,
                 SENSOR_SERVICE,
                 SENSOR_PRIVACY_SERVICE,
                 STORAGE_SERVICE,
@@ -5093,6 +5094,7 @@ public abstract class Context {
      * @see android.app.SearchManager
      */
     public static final String SEARCH_SERVICE = "search";
+    public static final String VERIFICATION_CODE_SERVICE = "verification_code";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a {@link

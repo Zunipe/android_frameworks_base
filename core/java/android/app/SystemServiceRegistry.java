@@ -293,6 +293,7 @@ import android.view.translation.ITranslationManager;
 import android.view.translation.TranslationManager;
 import android.view.translation.UiTranslationManager;
 import android.webkit.WebViewBootstrapFrameworkInitializer;
+import android.zunipe.VerificationCodeManager;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -727,6 +728,13 @@ public final class SystemServiceRegistry {
                 return new SearchManager(ctx.getOuterContext(),
                         ctx.mMainThread.getHandler());
             }});
+
+        registerService(Context.VERIFICATION_CODE_SERVICE, VerificationCodeManager.class,
+                new CachedServiceFetcher<VerificationCodeManager>() {
+                    @Override
+                    public VerificationCodeManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+                        return VerificationCodeManager.getInstance(ctx);
+                    }});
 
         registerService(Context.SECURITY_STATE_SERVICE, SecurityStateManager.class,
                 new CachedServiceFetcher<SecurityStateManager>() {

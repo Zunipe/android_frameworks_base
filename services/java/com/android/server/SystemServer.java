@@ -315,6 +315,8 @@ import com.android.server.webkit.WebViewUpdateService;
 import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
+import com.zunipe.server.AutoHotspotSystemService;
+import com.zunipe.server.VerificationCodeManagerService;
 
 import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
@@ -2341,6 +2343,10 @@ public final class SystemServer implements Dumpable {
             mSystemServiceManager.startService(BitmapOffloadService.class);
             t.traceEnd();
 
+            t.traceBegin("VerificationCodeManagerService");
+            mSystemServiceManager.startService(VerificationCodeManagerService.Lifecycle.class);
+            t.traceEnd();
+
             t.traceBegin("StartNotificationManager");
             mSystemServiceManager.startService(NotificationManagerService.class);
             SystemNotificationChannels.removeDeprecated(context);
@@ -3620,6 +3626,10 @@ public final class SystemServer implements Dumpable {
         } catch (Throwable e) {
             reportWtf("starting System UI", e);
         }
+        t.traceEnd();
+
+        t.traceBegin("AutoHotspotSystemService");
+        mSystemServiceManager.startService(AutoHotspotSystemService.class);
         t.traceEnd();
 
         t.traceEnd(); // startOtherServices

@@ -557,6 +557,36 @@ GenericException: android.service.autofill.augmented.FillWindow#finalize():
     Methods must not throw generic exceptions (`java.lang.Throwable`)
 
 
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/android/adb/ADBRootService.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/android/app/ActivityManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/android/content/BroadcastReceiver.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/android/content/Intent.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/android/hardware/camera2/impl/ExtensionKey.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/android/hardware/camera2/impl/PublicKey.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/android/hardware/camera2/params/StreamConfigurationMap.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/android/os/BatteryManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/base/core/java/com/android/internal/util/DataClass.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/frameworks/libs/modules-utils/java/android/annotation/Hide.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/out/srcjars/android/app/admin/MultiUserDeviceProvisioningParamsTransport.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/out/srcjars/android/app/admin/PolicyValueTransport.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/1073a982314abb75e649a17771da5e1ec82dbc89/out/srcjars/android/companion/datatransfer/continuity/IUniversalClipboardManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: PsiDocComment:
+    Invalid @hide syntax, must be a block tag
+
+
 InvalidNullabilityOverride: android.service.ondeviceintelligence.OnDeviceIntelligenceService#onBind(android.content.Intent) parameter #0:
     Invalid nullability on parameter `intent` in method `onBind`. Parameters of overrides cannot be NonNull if the super parameter is unannotated.
 InvalidNullabilityOverride: android.service.ondeviceintelligence.OnDeviceSandboxedInferenceService#onBind(android.content.Intent) parameter #0:
@@ -593,6 +623,8 @@ MethodNameUnits: android.hardware.camera2.extension.CameraOutputSurface#getColor
     Expected method name units to be `Bytes`, was `Space` in `getColorSpace`
 
 
+MissingGetterMatchingBuilder: android.media.audiopolicy.AudioMix.Builder#setInjectSilenceOnStarvation(boolean):
+    android.media.audiopolicy.AudioMix does not declare a `isInjectSilenceOnStarvation()` method matching method android.media.audiopolicy.AudioMix.Builder.setInjectSilenceOnStarvation(boolean)
 MissingGetterMatchingBuilder: android.service.voice.HotwordTrainingData.Builder#addTrainingAudio(android.service.voice.HotwordTrainingAudio):
     android.service.voice.HotwordTrainingData does not declare a `getTrainingAudios()` method matching method android.service.voice.HotwordTrainingData.Builder.addTrainingAudio(android.service.voice.HotwordTrainingAudio)
 MissingGetterMatchingBuilder: android.telecom.CallScreeningService.CallResponse.Builder#setShouldScreenCallViaAudioProcessing(boolean):
@@ -635,10 +667,58 @@ ProtectedMember: android.service.notification.NotificationAssistantService#attac
     Protected methods not allowed; must be public: method android.service.notification.NotificationAssistantService.attachBaseContext(android.content.Context)}
 
 
+ReferencesHidden: android.os.ServiceManager.ServiceNotFoundException:
+    Class android.os.ServiceManager is hidden but was referenced (as containing class) from public class android.os.ServiceManager.ServiceNotFoundException
+ReferencesHidden: android.zunipe.VerificationCodeManager#VerificationCodeManager(android.content.Context):
+    Class android.os.ServiceManager.ServiceNotFoundException is hidden but was referenced (as exception) from public constructor android.zunipe.VerificationCodeManager(android.content.Context)
+
+
+RequiresPermission: android.accounts.AccountManager#addAccount(String, String, String[], android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
+    Method 'addAccount' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#addAccountExplicitly(android.accounts.Account, String, android.os.Bundle):
+    Method 'addAccountExplicitly' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#blockingGetAuthToken(android.accounts.Account, String, boolean):
+    Method 'blockingGetAuthToken' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#clearPassword(android.accounts.Account):
+    Method 'clearPassword' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#confirmCredentials(android.accounts.Account, android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
+    Method 'confirmCredentials' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#editProperties(String, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
+    Method 'editProperties' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#getAccountsByType(String):
+    Method 'getAccountsByType' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
 RequiresPermission: android.accounts.AccountManager#getAccountsByTypeAndFeatures(String, String[], android.accounts.AccountManagerCallback<android.accounts.Account[]>, android.os.Handler):
     Method 'getAccountsByTypeAndFeatures' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.accounts.AccountManager#getAuthToken(android.accounts.Account, String, android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
+    Method 'getAuthToken' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#getAuthToken(android.accounts.Account, String, android.os.Bundle, boolean, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
+    Method 'getAuthToken' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#getAuthTokenByFeatures(String, String, String[], android.app.Activity, android.os.Bundle, android.os.Bundle, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
+    Method 'getAuthTokenByFeatures' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#getPassword(android.accounts.Account):
+    Method 'getPassword' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#getUserData(android.accounts.Account, String):
+    Method 'getUserData' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
 RequiresPermission: android.accounts.AccountManager#hasFeatures(android.accounts.Account, String[], android.accounts.AccountManagerCallback<java.lang.Boolean>, android.os.Handler):
     Method 'hasFeatures' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.accounts.AccountManager#invalidateAuthToken(String, String):
+    Method 'invalidateAuthToken' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#peekAuthToken(android.accounts.Account, String):
+    Method 'peekAuthToken' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#removeAccount(android.accounts.Account, android.accounts.AccountManagerCallback<java.lang.Boolean>, android.os.Handler):
+    Method 'removeAccount' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#removeAccountExplicitly(android.accounts.Account):
+    Method 'removeAccountExplicitly' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#renameAccount(android.accounts.Account, String, android.accounts.AccountManagerCallback<android.accounts.Account>, android.os.Handler):
+    Method 'renameAccount' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#setAuthToken(android.accounts.Account, String, String):
+    Method 'setAuthToken' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#setPassword(android.accounts.Account, String):
+    Method 'setPassword' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#setUserData(android.accounts.Account, String, String):
+    Method 'setUserData' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.accounts.AccountManager#updateCredentials(android.accounts.Account, String, android.os.Bundle, android.app.Activity, android.accounts.AccountManagerCallback<android.os.Bundle>, android.os.Handler):
+    Method 'updateCredentials' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
 RequiresPermission: android.app.ActivityManager#addOnUidImportanceListener(android.app.ActivityManager.OnUidImportanceListener, int):
     Method 'addOnUidImportanceListener' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.app.ActivityManager#getHistoricalProcessExitReasons(String, int, int):
@@ -909,6 +989,12 @@ RequiresPermission: android.companion.CompanionDeviceManager#startObservingDevic
     Method 'startObservingDevicePresence' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.companion.CompanionDeviceManager#stopObservingDevicePresence(String):
     Method 'stopObservingDevicePresence' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.companion.datatransfer.continuity.TaskContinuityManager#registerRemoteTaskListener(java.util.concurrent.Executor, android.companion.datatransfer.continuity.TaskContinuityManager.RemoteTaskListener):
+    Method 'registerRemoteTaskListener' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.companion.datatransfer.continuity.TaskContinuityManager#requestHandoff(int, int, java.util.concurrent.Executor, android.companion.datatransfer.continuity.TaskContinuityManager.HandoffRequestCallback):
+    Method 'requestHandoff' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.companion.datatransfer.continuity.TaskContinuityManager#unregisterRemoteTaskListener(android.companion.datatransfer.continuity.TaskContinuityManager.RemoteTaskListener):
+    Method 'unregisterRemoteTaskListener' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
 RequiresPermission: android.companion.virtual.VirtualDeviceManager#createVirtualDevice(int, android.companion.virtual.VirtualDeviceParams):
     Method 'createVirtualDevice' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.companion.virtual.VirtualDeviceParams.Builder#setLockState(int):
@@ -1471,6 +1557,8 @@ RequiresPermission: android.telephony.TelephonyManager#getSystemSelectionChannel
     Method 'getSystemSelectionChannels' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.telephony.TelephonyManager#getTelephonyHistograms():
     Method 'getTelephonyHistograms' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.telephony.TelephonyManager#getUiccCardsInfo():
+    Method 'getUiccCardsInfo' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
 RequiresPermission: android.telephony.TelephonyManager#getVisualVoicemailPackageName():
     Method 'getVisualVoicemailPackageName' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.telephony.TelephonyManager#getVoiceActivationState():

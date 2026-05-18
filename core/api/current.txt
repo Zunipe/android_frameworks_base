@@ -11406,6 +11406,7 @@ package android.content {
     field public static final String USAGE_STATS_SERVICE = "usagestats";
     field public static final String USB_SERVICE = "usb";
     field public static final String USER_SERVICE = "user";
+    field public static final String VERIFICATION_CODE_SERVICE = "verification_code";
     field public static final String VIBRATOR_MANAGER_SERVICE = "vibrator_manager";
     field @Deprecated public static final String VIBRATOR_SERVICE = "vibrator";
     field public static final String VIRTUAL_DEVICE_SERVICE = "virtualdevice";
@@ -63677,6 +63678,13 @@ package android.window {
     method @IntRange(from=1) public int getStabilityRequirementMillis();
     method public void writeToParcel(@NonNull android.os.Parcel, int);
     field @NonNull public static final android.os.Parcelable.Creator<android.window.TrustedPresentationThresholds> CREATOR;
+  }
+
+}
+
+package android.zunipe {
+
+  public class VerificationCodeManager {
   }
 
 }

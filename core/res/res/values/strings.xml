@@ -6963,4 +6963,9 @@ ul.</string>
     <string name="tv_watchdog_notification_channel_name">System Resource Alerts</string>
     <string name="tv_watchdog_notification_title">Resource Overuse</string>
     <string name="tv_watchdog_notification_content">"App '<xliff:g id="app_name">%1$s</xliff:g>' is using too many resources."</string>
+
+    <string-array name="verification_code_keyword" translatable="false" >
+        <item>Verification</item>
+        <item>验证码</item>
+    </string-array>
 </resources>

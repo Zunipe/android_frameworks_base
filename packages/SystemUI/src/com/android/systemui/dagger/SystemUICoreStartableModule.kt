@@ -58,6 +58,7 @@ import com.android.systemui.stylus.StylusUsiPowerStartable
 import com.android.systemui.temporarydisplay.chipbar.ChipbarCoordinator
 import com.android.systemui.usb.StorageNotification
 import com.android.systemui.util.NotificationChannels
+import com.android.systemui.verificationcode.VerificationCodePopupService
 import com.android.systemui.wmshell.WMShell
 import dagger.Binds
 import dagger.Module
@@ -328,5 +329,12 @@ abstract class SystemUICoreStartableModule {
     @ClassKey(SysUIKeyGestureEventInitializer::class)
     abstract fun bindSysUIKeyGestureEventInitializer(
         keyGestureEventInitializer: SysUIKeyGestureEventInitializer
+    ): CoreStartable
+
+    @Binds
+    @IntoMap
+    @ClassKey(VerificationCodePopupService::class)
+    abstract fun bindVerificationCodePopupService(
+        verificationCodePopupService: VerificationCodePopupService
     ): CoreStartable
 }
