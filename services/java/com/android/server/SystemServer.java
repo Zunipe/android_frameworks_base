@@ -316,7 +316,9 @@ import com.android.server.wm.ActivityTaskManagerService;
 import com.android.server.wm.WindowManagerGlobalLock;
 import com.android.server.wm.WindowManagerService;
 import com.zunipe.server.AutoHotspotSystemService;
+import com.zunipe.server.GameModeManagerService;
 import com.zunipe.server.VerificationCodeManagerService;
+import com.zunipe.server.ZunipeInputManagerService;
 
 import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
@@ -2345,6 +2347,14 @@ public final class SystemServer implements Dumpable {
 
             t.traceBegin("VerificationCodeManagerService");
             mSystemServiceManager.startService(VerificationCodeManagerService.Lifecycle.class);
+            t.traceEnd();
+
+            t.traceBegin("GameModeManagerService");
+            mSystemServiceManager.startService(GameModeManagerService.Lifecycle.class);
+            t.traceEnd();
+
+            t.traceBegin("ZunipeInputManagerService");
+            mSystemServiceManager.startService(ZunipeInputManagerService.Lifecycle.class);
             t.traceEnd();
 
             t.traceBegin("StartNotificationManager");

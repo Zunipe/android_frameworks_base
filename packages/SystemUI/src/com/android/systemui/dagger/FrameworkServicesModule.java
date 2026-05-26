@@ -114,7 +114,9 @@ import android.view.autofill.AutofillManager;
 import android.view.inputmethod.InputMethodManager;
 import android.view.textclassifier.TextClassificationManager;
 import android.window.TaskSnapshotManager;
+import android.zunipe.GameModeManager;
 import android.zunipe.VerificationCodeManager;
+import android.zunipe.ZunipeInputManager;
 
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.core.app.NotificationManagerCompat;
@@ -135,12 +137,12 @@ import com.android.systemui.user.utils.UserScopedServiceImpl;
 import com.android.systemui.utils.windowmanager.WindowManagerProvider;
 import com.android.systemui.utils.windowmanager.WindowManagerProviderImpl;
 
-import dagger.Module;
-import dagger.Provides;
-
 import java.util.Optional;
 
 import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
 
 /**
  * Provides Non-SystemUI, Framework-Owned instances to the dependency graph.
@@ -859,5 +861,17 @@ public class FrameworkServicesModule {
     @Singleton
     static VerificationCodeManager provideVerificationCodeManager(Context context) {
         return context.getSystemService(VerificationCodeManager.class);
+    }
+
+    @Provides
+    @Singleton
+    static GameModeManager provideGameModeManager(Context context) {
+        return context.getSystemService(GameModeManager.class);
+    }
+
+    @Provides
+    @Singleton
+    static ZunipeInputManager provideZunipeInputManager(Context context) {
+        return context.getSystemService(ZunipeInputManager.class);
     }
 }

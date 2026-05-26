@@ -5,19 +5,17 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.GradientDrawable;
-import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.InputDevice;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.zunipe.IVerificationCallback;
 import android.zunipe.VerificationCodeManager;
+import android.zunipe.ZunipeInputManager;
 
 import com.android.systemui.CoreStartable;
 import com.android.systemui.dagger.qualifiers.Main;
@@ -33,18 +31,19 @@ public class VerificationCodePopupService implements CoreStartable {
 
     private View mPopupView;
     private final WindowManager mWindowManager;
-    private final InputManager mInputManager;
+    private final ZunipeInputManager mZunipeInputManager;
 
     @Inject
     public VerificationCodePopupService(@NonNull @Main Context context,
                                         VerificationCodeManager verificationCodeManager,
                                         WindowManager windowManager,
-                                        InputManager inputManager) {
+                                        ZunipeInputManager zunipeInputManager,
+                                        @Main Handler mainHandler) {
         mContext = context;
-        mHandler = new Handler(Looper.getMainLooper());
+        mHandler = mainHandler;
         mVerificationCodeManager = verificationCodeManager;
         mWindowManager = windowManager;
-        mInputManager = inputManager;
+        mZunipeInputManager = zunipeInputManager;
         mCallback = new IVerificationCallback.Stub() {
             @Override
             public void onVerificationCodeComing(String code) {
@@ -84,8 +83,7 @@ public class VerificationCodePopupService implements CoreStartable {
 
         popup.setOnClickListener(v -> {
             String verificationCode = code == null ? "" : code.trim();
-            injectDigitKeys(verificationCode);
-            dismissPopup();
+            mZunipeInputManager.pasteString(verificationCode);
         });
         return popup;
     }
@@ -109,32 +107,6 @@ public class VerificationCodePopupService implements CoreStartable {
         mPopupView = popup;
 
         mWindowManager.addView(popup, params);
-    }
-
-    public void injectDigitKeys(String digits) {
-        if (digits == null || digits.isEmpty()) {
-            return;
-        }
-        for (int i = 0; i < digits.length(); i++) {
-            char c = digits.charAt(i);
-            if (c < '0' || c > '9') {
-                throw new IllegalArgumentException("non-digit at index " + i + ": " + c);
-            }
-        }
-
-        int mode = InputManager.INJECT_INPUT_EVENT_MODE_ASYNC;
-        for (int i = 0; i < digits.length(); i++) {
-            int keyCode = KeyEvent.KEYCODE_0 + (digits.charAt(i) - '0');
-            long t = android.os.SystemClock.uptimeMillis();
-            KeyEvent down = new KeyEvent(t, t, KeyEvent.ACTION_DOWN, keyCode, 0);
-            KeyEvent up = new KeyEvent(t, t, KeyEvent.ACTION_UP, keyCode, 0);
-            down.setSource(InputDevice.SOURCE_KEYBOARD);
-            up.setSource(InputDevice.SOURCE_KEYBOARD);
-            mHandler.postDelayed(() -> {
-                mInputManager.injectInputEvent(down, mode);
-                mInputManager.injectInputEvent(up, mode);
-            }, 50L * i);
-        }
     }
 
     private void dismissPopup() {

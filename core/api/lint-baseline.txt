@@ -429,6 +429,32 @@ GenericException: android.zunipe.VerificationCodeManager#VerificationCodeManager
     Methods must not throw generic exceptions (`java.lang.Exception`)
 
 
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/adb/ADBRootService.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/app/ActivityManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/content/BroadcastReceiver.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/content/Intent.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/hardware/camera2/impl/ExtensionKey.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/hardware/camera2/impl/PublicKey.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/hardware/camera2/params/StreamConfigurationMap.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/os/BatteryManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/com/android/internal/util/DataClass.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/libs/modules-utils/java/android/annotation/Hide.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/out/srcjars/android/app/admin/MultiUserDeviceProvisioningParamsTransport.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/out/srcjars/android/app/admin/PolicyValueTransport.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/lineage/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/out/srcjars/android/companion/datatransfer/continuity/IUniversalClipboardManager.java:
+    Invalid @hide syntax, must be a block tag
 InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/adb/ADBRootService.java:
     Invalid @hide syntax, must be a block tag
 InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/app/ActivityManager.java:
@@ -1237,6 +1263,10 @@ RequiresPermission: android.webkit.WebSettings#setGeolocationEnabled(boolean):
     Method 'setGeolocationEnabled' documentation mentions permissions without declaring @RequiresPermission
 
 
+ServiceName: android.content.Context#ZUNIPE_INPUT_MANAGER:
+    Inconsistent service constant name; expected `ZUNIPE_INPUT_MANAGER_SERVICE`, was `ZUNIPE_INPUT_MANAGER`
+
+
 Todo: android.hardware.camera2.params.StreamConfigurationMap:
     Documentation mentions 'TODO'
 Todo: android.provider.ContactsContract.RawContacts#newEntityIterator(android.database.Cursor):
@@ -1485,8 +1515,12 @@ UnflaggedApi: android.content.AttributionSource.Builder#setDeviceId(int):
     New API must be flagged with @FlaggedApi: method android.content.AttributionSource.Builder.setDeviceId(int)
 UnflaggedApi: android.content.AttributionSource.Builder#setNextAttributionSource(android.content.AttributionSource):
     New API must be flagged with @FlaggedApi: method android.content.AttributionSource.Builder.setNextAttributionSource(android.content.AttributionSource)
+UnflaggedApi: android.content.Context#GAME_MODE_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.Context.GAME_MODE_SERVICE
 UnflaggedApi: android.content.Context#VERIFICATION_CODE_SERVICE:
     New API must be flagged with @FlaggedApi: field android.content.Context.VERIFICATION_CODE_SERVICE
+UnflaggedApi: android.content.Context#ZUNIPE_INPUT_MANAGER:
+    New API must be flagged with @FlaggedApi: field android.content.Context.ZUNIPE_INPUT_MANAGER
 UnflaggedApi: android.content.ContextParams#shouldRegisterAttributionSource():
     New API must be flagged with @FlaggedApi: method android.content.ContextParams.shouldRegisterAttributionSource()
 UnflaggedApi: android.content.ContextParams.Builder#setShouldRegisterAttributionSource(boolean):
@@ -1777,7 +1811,15 @@ UnflaggedApi: android.view.inputmethod.InlineSuggestionsRequest.Builder#setClien
     New API must be flagged with @FlaggedApi: method android.view.inputmethod.InlineSuggestionsRequest.Builder.setClientSupported(boolean)
 UnflaggedApi: android.view.inputmethod.InlineSuggestionsRequest.Builder#setServiceSupported(boolean):
     New API must be flagged with @FlaggedApi: method android.view.inputmethod.InlineSuggestionsRequest.Builder.setServiceSupported(boolean)
+UnflaggedApi: android.zunipe.GameModeManager:
+    New API must be flagged with @FlaggedApi: class android.zunipe.GameModeManager
 UnflaggedApi: android.zunipe.VerificationCodeManager:
     New API must be flagged with @FlaggedApi: class android.zunipe.VerificationCodeManager
 UnflaggedApi: android.zunipe.VerificationCodeManager#VerificationCodeManager(android.content.Context):
     New API must be flagged with @FlaggedApi: constructor android.zunipe.VerificationCodeManager(android.content.Context)
+UnflaggedApi: android.zunipe.ZunipeInputManager:
+    New API must be flagged with @FlaggedApi: class android.zunipe.ZunipeInputManager
+UnflaggedApi: android.zunipe.ZunipeInputManager#TAG:
+    New API must be flagged with @FlaggedApi: field android.zunipe.ZunipeInputManager.TAG
+UnflaggedApi: android.zunipe.ZunipeInputManager#TYPE_GESTURE_THREE_FINGER_SLIDE:
+    New API must be flagged with @FlaggedApi: field android.zunipe.ZunipeInputManager.TYPE_GESTURE_THREE_FINGER_SLIDE

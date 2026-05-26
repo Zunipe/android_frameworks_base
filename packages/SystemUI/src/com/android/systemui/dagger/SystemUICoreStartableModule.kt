@@ -59,6 +59,7 @@ import com.android.systemui.temporarydisplay.chipbar.ChipbarCoordinator
 import com.android.systemui.usb.StorageNotification
 import com.android.systemui.util.NotificationChannels
 import com.android.systemui.verificationcode.VerificationCodePopupService
+import com.android.systemui.gamemode.GameModeMonitorService
 import com.android.systemui.wmshell.WMShell
 import dagger.Binds
 import dagger.Module
@@ -336,5 +337,12 @@ abstract class SystemUICoreStartableModule {
     @ClassKey(VerificationCodePopupService::class)
     abstract fun bindVerificationCodePopupService(
         verificationCodePopupService: VerificationCodePopupService
+    ): CoreStartable
+
+    @Binds
+    @IntoMap
+    @ClassKey(GameModeMonitorService::class)
+    abstract fun bindGameModeMonitorService(
+        gameModeMonitorService: GameModeMonitorService
     ): CoreStartable
 }

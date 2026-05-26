@@ -4582,4 +4582,9 @@
 
     <!-- Description for the Ambient Cue accessibility action label for expanding. [CHAR LIMIT=NONE] -->
     <string name="ambient_cue_expand_action">expand</string>
+
+    <string name="perf_hud_switch_title">Perf Hud</string>
+    <string name="mute_switch_title">Mute</string>
+    <string name="perf_boost_switch_title">Perf Boost</string>
+    <string name="clipboard_history">Clipboard History</string>
 </resources>

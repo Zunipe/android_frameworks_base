@@ -11337,6 +11337,7 @@ package android.content {
     field public static final String EUICC_SERVICE = "euicc";
     field public static final String FILE_INTEGRITY_SERVICE = "file_integrity";
     field public static final String FINGERPRINT_SERVICE = "fingerprint";
+    field public static final String GAME_MODE_SERVICE = "game_mode";
     field public static final String GAME_SERVICE = "game";
     field public static final String GRAMMATICAL_INFLECTION_SERVICE = "grammatical_inflection";
     field public static final String HARDWARE_PROPERTIES_SERVICE = "hardware_properties";
@@ -11417,6 +11418,7 @@ package android.content {
     field public static final String WIFI_RTT_RANGING_SERVICE = "wifirtt";
     field public static final String WIFI_SERVICE = "wifi";
     field @UiContext public static final String WINDOW_SERVICE = "window";
+    field public static final String ZUNIPE_INPUT_MANAGER = "zunipe_input_manager";
   }
 
   public static final class Context.BindServiceFlags {
@@ -63684,7 +63686,15 @@ package android.window {
 
 package android.zunipe {
 
+  public class GameModeManager {
+  }
+
   public class VerificationCodeManager {
+  }
+
+  public class ZunipeInputManager {
+    field public static final String TAG = "ZunipeInputManager";
+    field public static final int TYPE_GESTURE_THREE_FINGER_SLIDE = 1; // 0x1
   }
 
 }

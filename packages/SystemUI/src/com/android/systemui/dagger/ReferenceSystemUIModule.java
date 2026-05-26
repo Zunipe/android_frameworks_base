@@ -43,6 +43,7 @@ import com.android.systemui.doze.DozeHost;
 import com.android.systemui.dreams.suppression.dagger.NoOpActivityRecognitionModule;
 import com.android.systemui.education.dagger.ContextualEducationModule;
 import com.android.systemui.emergency.EmergencyGestureModule;
+import com.android.systemui.gamemode.ZunipeModule;
 import com.android.systemui.inputdevice.tutorial.KeyboardTouchpadTutorialModule;
 import com.android.systemui.keyboard.shortcut.ShortcutHelperModule;
 import com.android.systemui.keyguard.dagger.KeyguardModule;
@@ -148,6 +149,7 @@ import javax.inject.Provider;
         DeviceStateAutoRotateModule.class,
         DisplayPhoneModule.class,
         EmergencyGestureModule.class,
+        ZunipeModule.class,
         GestureModule.class,
         HeadsUpModule.class,
         KeyguardModule.class,

@@ -77,6 +77,7 @@ public class ClipboardListener implements
 
     private final UserTracker mUserTracker;
     private final Executor mMainExecutor;
+    private final ClipboardWindow mClipboardWindow;
 
     private final UserTracker.Callback mCallback = new UserTracker.Callback() {
         @Override
@@ -97,7 +98,8 @@ public class ClipboardListener implements
             UserScopedService<KeyguardManager> keyguardManager,
             UiEventLogger uiEventLogger,
             @Main Executor mainExecutor,
-            ClipboardOverlaySuppressionController clipboardOverlaySuppressionController) {
+            ClipboardOverlaySuppressionController clipboardOverlaySuppressionController,
+            ClipboardWindow clipboardWindow) {
         mContext = context;
         mOverlayProvider = clipboardOverlayControllerProvider;
         mClipboardToast = clipboardToast;
@@ -108,12 +110,14 @@ public class ClipboardListener implements
 
         mMainExecutor = mainExecutor;
         mUserTracker = userTracker;
+        mClipboardWindow = clipboardWindow;
         setUser(mUserTracker.getUserHandle());
     }
 
     private void setUser(UserHandle user) {
         mClipboardManagerForUser = mClipboardManagerProvider.forUser(user);
         mKeyguardManagerForUser = mKeyguardManagerProvider.forUser(user);
+        mClipboardWindow.setUser(mUserTracker.getUserId());
     }
 
     @Override
@@ -164,6 +168,7 @@ public class ClipboardListener implements
         } else {
             mUiEventLogger.log(CLIPBOARD_OVERLAY_UPDATED, 0, clipSource);
         }
+        mClipboardWindow.insertClipData(clipData);
         mClipboardOverlay.setClipData(clipData, clipSource);
         mClipboardOverlay.setOnSessionCompleteListener(() -> {
             // Session is complete, free memory until it's needed again.

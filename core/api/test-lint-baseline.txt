@@ -429,6 +429,38 @@ DeprecationMismatch: android.content.Context#POWER_WHITELIST_MANAGER:
     Field Context.POWER_WHITELIST_MANAGER: @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
 DeprecationMismatch: android.content.Context#WIFI_RTT_SERVICE:
     Field Context.WIFI_RTT_SERVICE: @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#clearWallpaper():
+    Method android.content.ContextWrapper.clearWallpaper(): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#getWallpaper():
+    Method android.content.ContextWrapper.getWallpaper(): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#getWallpaperDesiredMinimumHeight():
+    Method android.content.ContextWrapper.getWallpaperDesiredMinimumHeight(): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#getWallpaperDesiredMinimumWidth():
+    Method android.content.ContextWrapper.getWallpaperDesiredMinimumWidth(): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#peekWallpaper():
+    Method android.content.ContextWrapper.peekWallpaper(): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#removeStickyBroadcast(android.content.Intent):
+    Method android.content.ContextWrapper.removeStickyBroadcast(android.content.Intent): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#removeStickyBroadcastAsUser(android.content.Intent, android.os.UserHandle):
+    Method android.content.ContextWrapper.removeStickyBroadcastAsUser(android.content.Intent, android.os.UserHandle): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#sendStickyBroadcast(android.content.Intent):
+    Method android.content.ContextWrapper.sendStickyBroadcast(android.content.Intent): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#sendStickyBroadcastAsUser(android.content.Intent, android.os.UserHandle):
+    Method android.content.ContextWrapper.sendStickyBroadcastAsUser(android.content.Intent, android.os.UserHandle): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#sendStickyOrderedBroadcast(android.content.Intent, android.content.BroadcastReceiver, android.os.Handler, int, String, android.os.Bundle):
+    Method android.content.ContextWrapper.sendStickyOrderedBroadcast(android.content.Intent, android.content.BroadcastReceiver, android.os.Handler, int, String, android.os.Bundle): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#sendStickyOrderedBroadcastAsUser(android.content.Intent, android.os.UserHandle, android.content.BroadcastReceiver, android.os.Handler, int, String, android.os.Bundle):
+    Method android.content.ContextWrapper.sendStickyOrderedBroadcastAsUser(android.content.Intent, android.os.UserHandle, android.content.BroadcastReceiver, android.os.Handler, int, String, android.os.Bundle): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#setWallpaper(android.graphics.Bitmap):
+    Method android.content.ContextWrapper.setWallpaper(android.graphics.Bitmap): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.ContextWrapper#setWallpaper(java.io.InputStream):
+    Method android.content.ContextWrapper.setWallpaper(java.io.InputStream): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.vContext#BIND_ALLOW_FOREGROUND_SERVICE_STARTS_FROM_BACKGROUND:
+    Field vContext.BIND_ALLOW_FOREGROUND_SERVICE_STARTS_FROM_BACKGROUND: @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.vContext#POWER_WHITELIST_MANAGER:
+    Field vContext.POWER_WHITELIST_MANAGER: @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.content.vContext#WIFI_RTT_SERVICE:
+    Field vContext.WIFI_RTT_SERVICE: @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
 DeprecationMismatch: android.graphics.ComposeShader#ComposeShader(android.graphics.Shader, android.graphics.Shader, android.graphics.Xfermode):
     Constructor android.graphics.ComposeShader.ComposeShader(android.graphics.Shader, android.graphics.Shader, android.graphics.Xfermode): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
 DeprecationMismatch: android.graphics.PixelFormat#A_8:
@@ -471,6 +503,8 @@ DeprecationMismatch: android.speech.tts.TextToSpeech#areDefaultsEnforced():
     Method android.speech.tts.TextToSpeech.areDefaultsEnforced(): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
 DeprecationMismatch: android.telecom.StatusHints#StatusHints(android.content.ComponentName, CharSequence, int, android.os.Bundle):
     Constructor android.telecom.StatusHints.StatusHints(android.content.ComponentName, CharSequence, int, android.os.Bundle): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
+DeprecationMismatch: android.telecom.StatusHints#getIcon(Context):
+    Method android.telecom.StatusHints.getIcon(Context): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
 DeprecationMismatch: android.telecom.StatusHints#getIcon(android.content.Context):
     Method android.telecom.StatusHints.getIcon(android.content.Context): @Deprecated annotation (present) and @deprecated doc tag (not present) do not match
 DeprecationMismatch: android.telecom.StatusHints#getIconResId():
@@ -525,6 +559,36 @@ FlaggedApiLiteral: android.net.wifi.sharedconnectivity.app.SharedConnectivityMan
     @FlaggedApi contains a string literal, but should reference the field generated by aconfig (com.android.wifi.flags.Flags.FLAG_SHARED_CONNECTIVITY_BROADCAST_RECEIVER_TEST_API, however this flag doesn't seem to exist).
 
 
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/android/adb/ADBRootService.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/android/app/ActivityManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/android/content/BroadcastReceiver.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/android/content/Intent.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/android/hardware/camera2/impl/ExtensionKey.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/android/hardware/camera2/impl/PublicKey.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/android/hardware/camera2/params/StreamConfigurationMap.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/android/os/BatteryManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/base/core/java/com/android/internal/util/DataClass.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/frameworks/libs/modules-utils/java/android/annotation/Hide.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/out/srcjars/android/app/admin/MultiUserDeviceProvisioningParamsTransport.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/out/srcjars/android/app/admin/PolicyValueTransport.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/256b1fb53f335374d973369fc30e65ea1884a4b2/out/srcjars/android/companion/datatransfer/continuity/IUniversalClipboardManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: PsiDocComment:
+    Invalid @hide syntax, must be a block tag
+
+
 InvalidNullabilityOverride: android.window.WindowProviderService#getSystemService(String) parameter #0:
     Invalid nullability on parameter `name` in method `getSystemService`. Parameters of overrides cannot be NonNull if the super parameter is unannotated.
 InvalidNullabilityOverride: android.window.WindowProviderService#onConfigurationChanged(android.content.res.Configuration) parameter #0:
@@ -539,10 +603,38 @@ KotlinKeyword: android.app.Notification#when:
     Avoid field names that are Kotlin hard keywords ("when"); see https://android.github.io/kotlin-guides/interop.html#no-hard-keywords
 
 
+ManagerConstructor: android.content.pm.ShortcutManager#ShortcutManager(Context):
+    Managers must always be obtained from Context; no direct constructors
+
+
+MissingNullability: android.app.ActivityTaskManager#supportsMultiWindow(Context) parameter #0:
+    Missing nullability on parameter `context` in method `supportsMultiWindow`
+MissingNullability: android.app.ActivityTaskManager#supportsSplitScreenMultiWindow(Context) parameter #0:
+    Missing nullability on parameter `context` in method `supportsSplitScreenMultiWindow`
 MissingNullability: android.app.AppDetailsActivity#onCreate(android.os.Bundle) parameter #0:
     Missing nullability on parameter `savedInstanceState` in method `onCreate`
+MissingNullability: android.content.pm.LauncherApps#LauncherApps(Context) parameter #0:
+    Missing nullability on parameter `context` in method `LauncherApps`
+MissingNullability: android.content.pm.ShortcutManager#ShortcutManager(Context) parameter #0:
+    Missing nullability on parameter `context` in method `ShortcutManager`
+MissingNullability: android.hardware.camera2.CameraManager#getRotationOverride(Context, android.content.pm.PackageManager, String):
+    Missing nullability on method `getRotationOverride` return
 MissingNullability: android.hardware.camera2.CameraManager#getRotationOverride(android.content.Context, android.content.pm.PackageManager, String):
     Missing nullability on method `getRotationOverride` return
+MissingNullability: android.hardware.display.AmbientDisplayConfiguration#AmbientDisplayConfiguration(Context) parameter #0:
+    Missing nullability on parameter `context` in method `AmbientDisplayConfiguration`
+MissingNullability: android.os.VibrationEffect#get(android.net.Uri, Context) parameter #0:
+    Missing nullability on parameter `uri` in method `get`
+MissingNullability: android.os.VibrationEffect#get(android.net.Uri, Context) parameter #1:
+    Missing nullability on parameter `context` in method `get`
+MissingNullability: android.util.FeatureFlagUtils#isEnabled(Context, String) parameter #0:
+    Missing nullability on parameter `context` in method `isEnabled`
+MissingNullability: android.util.FeatureFlagUtils#isEnabled(Context, String) parameter #1:
+    Missing nullability on parameter `feature` in method `isEnabled`
+MissingNullability: android.util.FeatureFlagUtils#setEnabled(Context, String, boolean) parameter #0:
+    Missing nullability on parameter `context` in method `setEnabled`
+MissingNullability: android.util.FeatureFlagUtils#setEnabled(Context, String, boolean) parameter #1:
+    Missing nullability on parameter `feature` in method `setEnabled`
 MissingNullability: android.view.contentcapture.ViewNode.ViewStructureImpl#setHintIdEntry(String) parameter #0:
     Missing nullability on parameter `entryName` in method `setHintIdEntry`
 MissingNullability: android.widget.ImageView#isDefaultFocusHighlightNeeded(android.graphics.drawable.Drawable, android.graphics.drawable.Drawable) parameter #0:
@@ -807,8 +899,12 @@ RequiresPermission: android.app.admin.DevicePolicyManager#wipeData(int, CharSequ
     Method 'wipeData' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.app.admin.DevicePolicyManager#wipeDevice(int):
     Method 'wipeDevice' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.app.admin.PolicyUpdateReceiver#onPolicyChanged(Context, String, android.os.Bundle, android.app.admin.TargetUser, android.app.admin.PolicyUpdateResult):
+    Method 'onPolicyChanged' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.app.admin.PolicyUpdateReceiver#onPolicyChanged(android.content.Context, String, android.os.Bundle, android.app.admin.TargetUser, android.app.admin.PolicyUpdateResult):
     Method 'onPolicyChanged' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.app.admin.PolicyUpdateReceiver#onPolicySetResult(Context, String, android.os.Bundle, android.app.admin.TargetUser, android.app.admin.PolicyUpdateResult):
+    Method 'onPolicySetResult' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.app.admin.PolicyUpdateReceiver#onPolicySetResult(android.content.Context, String, android.os.Bundle, android.app.admin.TargetUser, android.app.admin.PolicyUpdateResult):
     Method 'onPolicySetResult' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.app.backup.BackupManager#dataChanged(String):
@@ -901,6 +997,12 @@ RequiresPermission: android.companion.CompanionDeviceManager#startObservingDevic
     Method 'startObservingDevicePresence' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.companion.CompanionDeviceManager#stopObservingDevicePresence(String):
     Method 'stopObservingDevicePresence' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.companion.datatransfer.continuity.TaskContinuityManager#registerRemoteTaskListener(java.util.concurrent.Executor, android.companion.datatransfer.continuity.TaskContinuityManager.RemoteTaskListener):
+    Method 'registerRemoteTaskListener' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.companion.datatransfer.continuity.TaskContinuityManager#requestHandoff(int, int, java.util.concurrent.Executor, android.companion.datatransfer.continuity.TaskContinuityManager.HandoffRequestCallback):
+    Method 'requestHandoff' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.companion.datatransfer.continuity.TaskContinuityManager#unregisterRemoteTaskListener(android.companion.datatransfer.continuity.TaskContinuityManager.RemoteTaskListener):
+    Method 'unregisterRemoteTaskListener' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
 RequiresPermission: android.companion.virtual.VirtualDeviceManager#createVirtualDevice(int, android.companion.virtual.VirtualDeviceParams):
     Method 'createVirtualDevice' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.companion.virtual.VirtualDeviceParams.Builder#setLockState(int):
@@ -1017,6 +1119,28 @@ RequiresPermission: android.content.pm.PackageManager#setPackagesSuspended(Strin
     Method 'setPackagesSuspended' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.content.pm.PackageManager#verifyIntentFilter(int, int, java.util.List<java.lang.String>):
     Method 'verifyIntentFilter' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.content.vContext#clearWallpaper():
+    Method 'clearWallpaper' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#getExternalCacheDir():
+    Method 'getExternalCacheDir' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#getExternalCacheDirs():
+    Method 'getExternalCacheDirs' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#getExternalFilesDir(String):
+    Method 'getExternalFilesDir' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#getExternalFilesDirs(String):
+    Method 'getExternalFilesDirs' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#getExternalMediaDirs():
+    Method 'getExternalMediaDirs' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#getObbDir():
+    Method 'getObbDir' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#getObbDirs():
+    Method 'getObbDirs' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#removeStickyBroadcastAsUser(android.content.Intent, android.os.UserHandle):
+    Method 'removeStickyBroadcastAsUser' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
+RequiresPermission: android.content.vContext#setWallpaper(android.graphics.Bitmap):
+    Method 'setWallpaper' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.content.vContext#setWallpaper(java.io.InputStream):
+    Method 'setWallpaper' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.hardware.Sensor#getHighestDirectReportRateLevel():
     Method 'getHighestDirectReportRateLevel' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.hardware.Sensor#getMinDelay():
@@ -1081,18 +1205,24 @@ RequiresPermission: android.media.AudioRecordingConfiguration#getClientUid():
     Method 'getClientUid' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.media.MediaCodec#createByCodecNameForClient(String, int, int):
     Method 'createByCodecNameForClient' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.media.MediaExtractor#setDataSource(Context, android.net.Uri, java.util.Map<java.lang.String,java.lang.String>):
+    Method 'setDataSource' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.media.MediaExtractor#setDataSource(String):
     Method 'setDataSource' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.media.MediaExtractor#setDataSource(String, java.util.Map<java.lang.String,java.lang.String>):
     Method 'setDataSource' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.media.MediaExtractor#setDataSource(android.content.Context, android.net.Uri, java.util.Map<java.lang.String,java.lang.String>):
     Method 'setDataSource' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.media.MediaPlayer#setWakeMode(Context, int):
+    Method 'setWakeMode' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.media.MediaPlayer#setWakeMode(android.content.Context, int):
     Method 'setWakeMode' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.media.MediaRouter2#getInstance(android.content.Context, String):
     Method 'getInstance' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.media.RingtoneManager#getCursor():
     Method 'getCursor' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.media.RingtoneManager#getValidRingtoneUri(Context):
+    Method 'getValidRingtoneUri' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.media.RingtoneManager#getValidRingtoneUri(android.content.Context):
     Method 'getValidRingtoneUri' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.media.audiofx.HapticGenerator#setEnabled(boolean):
@@ -1133,6 +1263,8 @@ RequiresPermission: android.net.NetworkScoreManager#requestScores(java.util.Coll
     Method 'requestScores' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.net.NetworkScoreManager#setActiveScorer(String):
     Method 'setActiveScorer' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.net.VpnService#prepareAndAuthorize(Context):
+    Method 'prepareAndAuthorize' documentation duplicates auto-generated documentation by @RequiresPermission. If the permissions are only required under certain circumstances use conditional=true to suppress the auto-documentation
 RequiresPermission: android.net.VpnService#prepareAndAuthorize(android.content.Context):
     Method 'prepareAndAuthorize' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.net.sip.SipAudioCall#setSpeakerMode(boolean):
@@ -1259,6 +1391,8 @@ RequiresPermission: android.os.PowerManager#setDynamicPowerSaveHint(boolean, int
     Method 'setDynamicPowerSaveHint' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.os.PowerManager#userActivity(long, int, int):
     Method 'userActivity' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.os.RecoverySystem#rebootWipeUserData(Context):
+    Method 'rebootWipeUserData' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.os.RecoverySystem#rebootWipeUserData(android.content.Context):
     Method 'rebootWipeUserData' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.os.StrictMode.VmPolicy.Builder#detectFileUriExposure():
@@ -1309,8 +1443,12 @@ RequiresPermission: android.permission.PermissionManager#checkPermissionForDataD
     Method 'checkPermissionForDataDeliveryFromDataSource' documentation mentions permissions already declared by @RequiresPermission
 RequiresPermission: android.permission.PermissionManager#checkPermissionForStartDataDelivery(String, android.content.AttributionSource, String):
     Method 'checkPermissionForStartDataDelivery' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.provider.Settings#canDrawOverlays(Context):
+    Method 'canDrawOverlays' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.provider.Settings#canDrawOverlays(android.content.Context):
     Method 'canDrawOverlays' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.provider.Settings.System#canWrite(Context):
+    Method 'canWrite' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.provider.Settings.System#canWrite(android.content.Context):
     Method 'canWrite' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.security.KeyChain#removeCredentialManagementApp(android.content.Context):
@@ -1427,6 +1565,8 @@ RequiresPermission: android.telephony.SubscriptionManager#getCompleteActiveSubsc
     Method 'getCompleteActiveSubscriptionInfoList' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.telephony.SubscriptionManager#getOpportunisticSubscriptions():
     Method 'getOpportunisticSubscriptions' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.telephony.SubscriptionManager#getResourcesForSubId(Context, int):
+    Method 'getResourcesForSubId' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.telephony.SubscriptionManager#getResourcesForSubId(android.content.Context, int):
     Method 'getResourcesForSubId' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.telephony.SubscriptionManager#getSubscriptionsInGroup(android.os.ParcelUuid):
@@ -1735,8 +1875,12 @@ RequiresPermission: android.telephony.TelephonyManager#updateAvailableNetworks(j
     Method 'updateAvailableNetworks' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.telephony.TelephonyManager#updateOtaEmergencyNumberDbFilePath(android.os.ParcelFileDescriptor):
     Method 'updateOtaEmergencyNumberDbFilePath' documentation mentions permissions already declared by @RequiresPermission
+RequiresPermission: android.telephony.VisualVoicemailService#sendVisualVoicemailSms(Context, android.telecom.PhoneAccountHandle, String, short, String, android.app.PendingIntent):
+    Method 'sendVisualVoicemailSms' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.telephony.VisualVoicemailService#sendVisualVoicemailSms(android.content.Context, android.telecom.PhoneAccountHandle, String, short, String, android.app.PendingIntent):
     Method 'sendVisualVoicemailSms' documentation mentions permissions without declaring @RequiresPermission
+RequiresPermission: android.telephony.VisualVoicemailService#setSmsFilterSettings(Context, android.telecom.PhoneAccountHandle, android.telephony.VisualVoicemailSmsFilterSettings):
+    Method 'setSmsFilterSettings' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.telephony.VisualVoicemailService#setSmsFilterSettings(android.content.Context, android.telecom.PhoneAccountHandle, android.telephony.VisualVoicemailSmsFilterSettings):
     Method 'setSmsFilterSettings' documentation mentions permissions without declaring @RequiresPermission
 RequiresPermission: android.telephony.euicc.EuiccManager#continueOperation(android.content.Intent, android.os.Bundle):
@@ -2019,7 +2163,11 @@ Todo: android.media.tv.TvContentRatingSystemInfo#getXmlUri():
     Documentation mentions 'TODO'
 Todo: android.media.tv.TvInputInfo#isConnectedToHdmiSwitch():
     Documentation mentions 'TODO'
+Todo: android.os.RecoverySystem#prepareForUnattendedUpdate(Context, String, android.content.IntentSender):
+    Documentation mentions 'TODO'
 Todo: android.os.RecoverySystem#prepareForUnattendedUpdate(android.content.Context, String, android.content.IntentSender):
+    Documentation mentions 'TODO'
+Todo: android.os.RecoverySystem#rebootAndApply(Context, String, String):
     Documentation mentions 'TODO'
 Todo: android.os.RecoverySystem#rebootAndApply(android.content.Context, String, String):
     Documentation mentions 'TODO'
@@ -2049,6 +2197,20 @@ UnflaggedApi: android.Manifest.permission#START_ACTIVITIES_FROM_SDK_SANDBOX:
     New API must be flagged with @FlaggedApi: field android.Manifest.permission.START_ACTIVITIES_FROM_SDK_SANDBOX
 UnflaggedApi: android.Manifest.permission#USE_REMOTE_AUTH:
     New API must be flagged with @FlaggedApi: field android.Manifest.permission.USE_REMOTE_AUTH
+UnflaggedApi: android.app.ActivityOptions#makeCustomAnimation(Context, int, int, int, android.os.Handler, android.app.ActivityOptions.OnAnimationStartedListener, android.app.ActivityOptions.OnAnimationFinishedListener):
+    New API must be flagged with @FlaggedApi: method android.app.ActivityOptions.makeCustomAnimation(Context,int,int,int,android.os.Handler,android.app.ActivityOptions.OnAnimationStartedListener,android.app.ActivityOptions.OnAnimationFinishedListener)
+UnflaggedApi: android.app.ActivityOptions#makeCustomTaskAnimation(Context, int, int, android.os.Handler, android.app.ActivityOptions.OnAnimationStartedListener, android.app.ActivityOptions.OnAnimationFinishedListener):
+    New API must be flagged with @FlaggedApi: method android.app.ActivityOptions.makeCustomTaskAnimation(Context,int,int,android.os.Handler,android.app.ActivityOptions.OnAnimationStartedListener,android.app.ActivityOptions.OnAnimationFinishedListener)
+UnflaggedApi: android.app.ActivityTaskManager#currentUiModeSupportsErrorDialogs(Context):
+    New API must be flagged with @FlaggedApi: method android.app.ActivityTaskManager.currentUiModeSupportsErrorDialogs(Context)
+UnflaggedApi: android.app.ActivityTaskManager#getMaxNumPictureInPictureActions(Context):
+    New API must be flagged with @FlaggedApi: method android.app.ActivityTaskManager.getMaxNumPictureInPictureActions(Context)
+UnflaggedApi: android.app.ActivityTaskManager#supportsMultiWindow(Context):
+    New API must be flagged with @FlaggedApi: method android.app.ActivityTaskManager.supportsMultiWindow(Context)
+UnflaggedApi: android.app.ActivityTaskManager#supportsSplitScreenMultiWindow(Context):
+    New API must be flagged with @FlaggedApi: method android.app.ActivityTaskManager.supportsSplitScreenMultiWindow(Context)
+UnflaggedApi: android.app.ActivityTaskManager#updateLockTaskPackages(Context, String[]):
+    New API must be flagged with @FlaggedApi: method android.app.ActivityTaskManager.updateLockTaskPackages(Context,String[])
 UnflaggedApi: android.app.admin.DevicePolicyIdentifiers#PERMITTED_INPUT_METHODS_POLICY:
     New API must be flagged with @FlaggedApi: field android.app.admin.DevicePolicyIdentifiers.PERMITTED_INPUT_METHODS_POLICY
 UnflaggedApi: android.app.admin.DevicePolicyIdentifiers#PERSONAL_APPS_SUSPENDED_POLICY:
@@ -2099,6 +2261,10 @@ UnflaggedApi: android.content.Intent#addExtendedFlags(int):
     New API must be flagged with @FlaggedApi: method android.content.Intent.addExtendedFlags(int)
 UnflaggedApi: android.content.Intent#getExtendedFlags():
     New API must be flagged with @FlaggedApi: method android.content.Intent.getExtendedFlags()
+UnflaggedApi: android.content.pm.LauncherApps#LauncherApps(Context):
+    New API must be flagged with @FlaggedApi: constructor android.content.pm.LauncherApps(Context)
+UnflaggedApi: android.content.pm.ShortcutManager#ShortcutManager(Context):
+    New API must be flagged with @FlaggedApi: constructor android.content.pm.ShortcutManager(Context)
 UnflaggedApi: android.content.pm.UserInfo#isCommunalProfile():
     New API must be flagged with @FlaggedApi: method android.content.pm.UserInfo.isCommunalProfile()
 UnflaggedApi: android.content.pm.UserInfo#isPrivateProfile():
@@ -2143,6 +2309,40 @@ UnflaggedApi: android.content.res.CameraCompatibilityInfo.Builder#setShouldLette
     New API must be flagged with @FlaggedApi: method android.content.res.CameraCompatibilityInfo.Builder.setShouldLetterboxForCameraCompat(boolean)
 UnflaggedApi: android.content.res.CameraCompatibilityInfo.Builder#setShouldOverrideSensorOrientation(boolean):
     New API must be flagged with @FlaggedApi: method android.content.res.CameraCompatibilityInfo.Builder.setShouldOverrideSensorOrientation(boolean)
+UnflaggedApi: android.content.vContext#ATTENTION_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.vContext.ATTENTION_SERVICE
+UnflaggedApi: android.content.vContext#CONTENT_CAPTURE_MANAGER_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.vContext.CONTENT_CAPTURE_MANAGER_SERVICE
+UnflaggedApi: android.content.vContext#DEVICE_IDLE_CONTROLLER:
+    New API must be flagged with @FlaggedApi: field android.content.vContext.DEVICE_IDLE_CONTROLLER
+UnflaggedApi: android.content.vContext#DREAM_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.vContext.DREAM_SERVICE
+UnflaggedApi: android.content.vContext#FONT_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.vContext.FONT_SERVICE
+UnflaggedApi: android.content.vContext#POWER_EXEMPTION_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.vContext.POWER_EXEMPTION_SERVICE
+UnflaggedApi: android.content.vContext#TEST_NETWORK_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.vContext.TEST_NETWORK_SERVICE
+UnflaggedApi: android.content.vContext#getCrateDir(String):
+    New API must be flagged with @FlaggedApi: method android.content.vContext.getCrateDir(String)
+UnflaggedApi: android.content.vContext#getDisplayId():
+    New API must be flagged with @FlaggedApi: method android.content.vContext.getDisplayId()
+UnflaggedApi: android.content.vContext#getUser():
+    New API must be flagged with @FlaggedApi: method android.content.vContext.getUser()
+UnflaggedApi: android.content.vContext#getUserId():
+    New API must be flagged with @FlaggedApi: method android.content.vContext.getUserId()
+UnflaggedApi: android.content.vContext#setAutofillOptions(android.content.AutofillOptions):
+    New API must be flagged with @FlaggedApi: method android.content.vContext.setAutofillOptions(android.content.AutofillOptions)
+UnflaggedApi: android.content.vContext#setContentCaptureOptions(android.content.ContentCaptureOptions):
+    New API must be flagged with @FlaggedApi: method android.content.vContext.setContentCaptureOptions(android.content.ContentCaptureOptions)
+UnflaggedApi: android.content.vContext#updateDeviceId(int):
+    New API must be flagged with @FlaggedApi: method android.content.vContext.updateDeviceId(int)
+UnflaggedApi: android.credentials.CredentialManager#isServiceEnabled(Context):
+    New API must be flagged with @FlaggedApi: method android.credentials.CredentialManager.isServiceEnabled(Context)
+UnflaggedApi: android.credentials.CredentialProviderInfo#getLabel(Context):
+    New API must be flagged with @FlaggedApi: method android.credentials.CredentialProviderInfo.getLabel(Context)
+UnflaggedApi: android.credentials.CredentialProviderInfo#getServiceIcon(Context):
+    New API must be flagged with @FlaggedApi: method android.credentials.CredentialProviderInfo.getServiceIcon(Context)
 UnflaggedApi: android.credentials.CredentialProviderInfo#isPrimary():
     New API must be flagged with @FlaggedApi: method android.credentials.CredentialProviderInfo.isPrimary()
 UnflaggedApi: android.hardware.CameraCompatMode:
@@ -2169,12 +2369,34 @@ UnflaggedApi: android.hardware.CameraCompatMode#shouldOverrideSensorOrientation(
     New API must be flagged with @FlaggedApi: method android.hardware.CameraCompatMode.shouldOverrideSensorOrientation()
 UnflaggedApi: android.hardware.CameraCompatMode#writeToParcel(android.os.Parcel, int):
     New API must be flagged with @FlaggedApi: method android.hardware.CameraCompatMode.writeToParcel(android.os.Parcel,int)
+UnflaggedApi: android.hardware.camera2.CameraManager#getRotationOverride(Context, android.content.pm.PackageManager, String):
+    New API must be flagged with @FlaggedApi: method android.hardware.camera2.CameraManager.getRotationOverride(Context,android.content.pm.PackageManager,String)
 UnflaggedApi: android.hardware.camera2.CameraManager#getRotationOverride(android.content.Context, android.content.pm.PackageManager, String):
     New API must be flagged with @FlaggedApi: method android.hardware.camera2.CameraManager.getRotationOverride(android.content.Context,android.content.pm.PackageManager,String)
+UnflaggedApi: android.hardware.display.AmbientDisplayConfiguration#AmbientDisplayConfiguration(Context):
+    New API must be flagged with @FlaggedApi: constructor android.hardware.display.AmbientDisplayConfiguration(Context)
 UnflaggedApi: android.hardware.input.InputManager#addUniqueIdAssociationByPort(String, String):
     New API must be flagged with @FlaggedApi: method android.hardware.input.InputManager.addUniqueIdAssociationByPort(String,String)
 UnflaggedApi: android.hardware.input.InputManager#removeUniqueIdAssociationByPort(String):
     New API must be flagged with @FlaggedApi: method android.hardware.input.InputManager.removeUniqueIdAssociationByPort(String)
+UnflaggedApi: android.hardware.input.InputSettings#getAccessibilityBounceKeysThreshold(Context):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.getAccessibilityBounceKeysThreshold(Context)
+UnflaggedApi: android.hardware.input.InputSettings#getAccessibilitySlowKeysThreshold(Context):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.getAccessibilitySlowKeysThreshold(Context)
+UnflaggedApi: android.hardware.input.InputSettings#isAccessibilityMouseKeysEnabled(Context):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.isAccessibilityMouseKeysEnabled(Context)
+UnflaggedApi: android.hardware.input.InputSettings#isAccessibilityStickyKeysEnabled(Context):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.isAccessibilityStickyKeysEnabled(Context)
+UnflaggedApi: android.hardware.input.InputSettings#setAccessibilityBounceKeysThreshold(Context, int):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.setAccessibilityBounceKeysThreshold(Context,int)
+UnflaggedApi: android.hardware.input.InputSettings#setAccessibilityMouseKeysEnabled(Context, boolean):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.setAccessibilityMouseKeysEnabled(Context,boolean)
+UnflaggedApi: android.hardware.input.InputSettings#setAccessibilitySlowKeysThreshold(Context, int):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.setAccessibilitySlowKeysThreshold(Context,int)
+UnflaggedApi: android.hardware.input.InputSettings#setAccessibilityStickyKeysEnabled(Context, boolean):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.setAccessibilityStickyKeysEnabled(Context,boolean)
+UnflaggedApi: android.hardware.input.InputSettings#setMaximumObscuringOpacityForTouch(Context, float):
+    New API must be flagged with @FlaggedApi: method android.hardware.input.InputSettings.setMaximumObscuringOpacityForTouch(Context,float)
 UnflaggedApi: android.media.AudioManager#enterAudioFocusFreezeForTest(java.util.List<java.lang.Integer>):
     New API must be flagged with @FlaggedApi: method android.media.AudioManager.enterAudioFocusFreezeForTest(java.util.List<java.lang.Integer>)
 UnflaggedApi: android.media.AudioManager#exitAudioFocusFreezeForTest():
@@ -2259,6 +2481,8 @@ UnflaggedApi: android.media.soundtrigger.SoundTriggerManager#loadSoundModel(andr
     New API must be flagged with @FlaggedApi: method android.media.soundtrigger.SoundTriggerManager.loadSoundModel(android.hardware.soundtrigger.SoundTrigger.SoundModel)
 UnflaggedApi: android.media.soundtrigger.SoundTriggerManager.Model#getSoundModel():
     New API must be flagged with @FlaggedApi: method android.media.soundtrigger.SoundTriggerManager.Model.getSoundModel()
+UnflaggedApi: android.net.wifi.sharedconnectivity.app.SharedConnectivityManager#create(Context, String, String):
+    New API must be flagged with @FlaggedApi: method android.net.wifi.sharedconnectivity.app.SharedConnectivityManager.create(Context,String,String)
 UnflaggedApi: android.os.BatteryManager#BATTERY_PLUGGED_ANY:
     New API must be flagged with @FlaggedApi: field android.os.BatteryManager.BATTERY_PLUGGED_ANY
 UnflaggedApi: android.os.BugreportParams#BUGREPORT_MODE_MAX_VALUE:
@@ -2273,6 +2497,8 @@ UnflaggedApi: android.os.UserManager#getAliveUsers():
     New API must be flagged with @FlaggedApi: method android.os.UserManager.getAliveUsers()
 UnflaggedApi: android.os.UserManager#getUsers():
     New API must be flagged with @FlaggedApi: method android.os.UserManager.getUsers()
+UnflaggedApi: android.os.VibrationEffect#get(android.net.Uri, Context):
+    New API must be flagged with @FlaggedApi: method android.os.VibrationEffect.get(android.net.Uri,Context)
 UnflaggedApi: android.os.vibrator.persistence.ParsedVibration:
     New API must be flagged with @FlaggedApi: class android.os.vibrator.persistence.ParsedVibration
 UnflaggedApi: android.os.vibrator.persistence.ParsedVibration#getVibrationEffects():
@@ -2291,6 +2517,12 @@ UnflaggedApi: android.os.vibrator.persistence.VibrationXmlSerializer#serialize(a
     New API must be flagged with @FlaggedApi: method android.os.vibrator.persistence.VibrationXmlSerializer.serialize(android.os.VibrationEffect,java.io.Writer)
 UnflaggedApi: android.os.vibrator.persistence.VibrationXmlSerializer.SerializationFailedException:
     New API must be flagged with @FlaggedApi: class android.os.vibrator.persistence.VibrationXmlSerializer.SerializationFailedException
+UnflaggedApi: android.print.PrinterInfo#loadIcon(Context):
+    New API must be flagged with @FlaggedApi: method android.print.PrinterInfo.loadIcon(Context)
+UnflaggedApi: android.security.KeyChain#setCredentialManagementApp(Context, String, android.security.AppUriAuthenticationPolicy):
+    New API must be flagged with @FlaggedApi: method android.security.KeyChain.setCredentialManagementApp(Context,String,android.security.AppUriAuthenticationPolicy)
+UnflaggedApi: android.service.dreams.DreamService#getDreamMetadata(Context, android.content.pm.ServiceInfo):
+    New API must be flagged with @FlaggedApi: method android.service.dreams.DreamService.getDreamMetadata(Context,android.content.pm.ServiceInfo)
 UnflaggedApi: android.service.notification.NotificationRankingUpdate:
     New API must be flagged with @FlaggedApi: class android.service.notification.NotificationRankingUpdate
 UnflaggedApi: android.service.notification.NotificationRankingUpdate#CONTENTS_FILE_DESCRIPTOR:
@@ -2301,8 +2533,18 @@ UnflaggedApi: android.service.notification.NotificationRankingUpdate#isFdNotNull
     New API must be flagged with @FlaggedApi: method android.service.notification.NotificationRankingUpdate.isFdNotNullAndClosed()
 UnflaggedApi: android.service.notification.ZenPolicy.Builder#Builder(android.service.notification.ZenPolicy):
     New API must be flagged with @FlaggedApi: constructor android.service.notification.ZenPolicy.Builder(android.service.notification.ZenPolicy)
+UnflaggedApi: android.service.quickaccesswallet.QuickAccessWalletClient#create(Context):
+    New API must be flagged with @FlaggedApi: method android.service.quickaccesswallet.QuickAccessWalletClient.create(Context)
+UnflaggedApi: android.speech.SpeechRecognizer#createOnDeviceTestingSpeechRecognizer(Context):
+    New API must be flagged with @FlaggedApi: method android.speech.SpeechRecognizer.createOnDeviceTestingSpeechRecognizer(Context)
 UnflaggedApi: android.telephony.TelephonyManager#HAL_SERVICE_SATELLITE:
     New API must be flagged with @FlaggedApi: field android.telephony.TelephonyManager.HAL_SERVICE_SATELLITE
+UnflaggedApi: android.telephony.TelephonyManager#addDevicePolicyOverrideApn(Context, android.telephony.data.ApnSetting):
+    New API must be flagged with @FlaggedApi: method android.telephony.TelephonyManager.addDevicePolicyOverrideApn(Context,android.telephony.data.ApnSetting)
+UnflaggedApi: android.telephony.TelephonyManager#getDevicePolicyOverrideApns(Context):
+    New API must be flagged with @FlaggedApi: method android.telephony.TelephonyManager.getDevicePolicyOverrideApns(Context)
+UnflaggedApi: android.telephony.TelephonyManager#modifyDevicePolicyOverrideApn(Context, int, android.telephony.data.ApnSetting):
+    New API must be flagged with @FlaggedApi: method android.telephony.TelephonyManager.modifyDevicePolicyOverrideApn(Context,int,android.telephony.data.ApnSetting)
 UnflaggedApi: android.telephony.ims.feature.MmTelFeature.MmTelCapabilities:
     New API must be flagged with @FlaggedApi: class android.telephony.ims.feature.MmTelFeature.MmTelCapabilities
 UnflaggedApi: android.text.MeasuredParagraph:
@@ -2315,6 +2557,10 @@ UnflaggedApi: android.text.MeasuredParagraph.StyleRunCallback#onAppendReplacemen
     New API must be flagged with @FlaggedApi: method android.text.MeasuredParagraph.StyleRunCallback.onAppendReplacementRun(android.graphics.Paint,int,float)
 UnflaggedApi: android.text.MeasuredParagraph.StyleRunCallback#onAppendStyleRun(android.graphics.Paint, android.graphics.text.LineBreakConfig, int, boolean):
     New API must be flagged with @FlaggedApi: method android.text.MeasuredParagraph.StyleRunCallback.onAppendStyleRun(android.graphics.Paint,android.graphics.text.LineBreakConfig,int,boolean)
+UnflaggedApi: android.util.FeatureFlagUtils#isEnabled(Context, String):
+    New API must be flagged with @FlaggedApi: method android.util.FeatureFlagUtils.isEnabled(Context,String)
+UnflaggedApi: android.util.FeatureFlagUtils#setEnabled(Context, String, boolean):
+    New API must be flagged with @FlaggedApi: method android.util.FeatureFlagUtils.setEnabled(Context,String,boolean)
 UnflaggedApi: android.view.Choreographer#getFrameTimeNanos():
     New API must be flagged with @FlaggedApi: method android.view.Choreographer.getFrameTimeNanos()
 UnflaggedApi: android.view.InputDevice#getAssociatedDisplayId():
@@ -2359,5 +2605,11 @@ UnflaggedApi: android.window.WindowInfosListenerForTest.WindowInfo#transform:
     New API must be flagged with @FlaggedApi: field android.window.WindowInfosListenerForTest.WindowInfo.transform
 
 
+UserHandle: android.telephony.SmsManager#getSmsOtpTrustedPackages(Context, android.os.UserHandle):
+    When a method overload is needed to target a specific UserHandle, callers should be directed to use Context.createPackageContextAsUser() and re-obtain the relevant Manager, and no new API should be added
 UserHandle: android.telephony.SmsManager#getSmsOtpTrustedPackages(android.content.Context, android.os.UserHandle):
     When a method overload is needed to target a specific UserHandle, callers should be directed to use Context.createPackageContextAsUser() and re-obtain the relevant Manager, and no new API should be added
+
+
+UserHandleName: android.widget.TextView#setEnforceImePolicyUser(android.os.UserHandle):
+    Method taking UserHandle should be named `doFooAsUser` or `queryFooForUser`, was `setEnforceImePolicyUser`

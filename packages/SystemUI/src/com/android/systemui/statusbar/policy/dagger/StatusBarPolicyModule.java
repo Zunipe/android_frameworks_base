@@ -35,8 +35,14 @@ import com.android.systemui.dagger.qualifiers.Application;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.dagger.qualifiers.UiBackground;
+import com.android.systemui.gamemode.PerfBoostController;
+import com.android.systemui.gamemode.PerfBoostControllerImpl;
+import com.android.systemui.gamemode.PerfHudController;
+import com.android.systemui.gamemode.PerfHudControllerImpl;
 import com.android.systemui.log.LogBuffer;
 import com.android.systemui.log.LogBufferFactory;
+import com.android.systemui.mute.MuteController;
+import com.android.systemui.mute.MuteControllerImpl;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.statusbar.connectivity.AccessPointController;
 import com.android.systemui.statusbar.connectivity.AccessPointControllerImpl;
@@ -185,6 +191,15 @@ public interface StatusBarPolicyModule {
     /** */
     @Binds
     SecurityController provideSecurityController(SecurityControllerImpl controllerImpl);
+
+    @Binds
+    PerfHudController providePerfHudController(PerfHudControllerImpl controllerImpl);
+
+    @Binds
+    PerfBoostController providePerfBoostController(PerfBoostControllerImpl controllerImpl);
+
+    @Binds
+    MuteController provideMuteHudController(MuteControllerImpl controllerImpl);
 
     /** */
     @Binds
