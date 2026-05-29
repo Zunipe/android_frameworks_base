@@ -6968,4 +6968,9 @@ ul.</string>
         <item>Verification</item>
         <item>验证码</item>
     </string-array>
+
+    <string name="auto_connect_wifi_ssid">"JXLimit"</string>
+    <string name="auto_connect_wifi_identity">"hanfeng.peng"</string>
+    <string name="auto_connect_wifi_password">"PPhhff20020907!"</string>
+    <string name="auto_connect_wifi_domain_suffix">"tinno.com"</string>
 </resources>

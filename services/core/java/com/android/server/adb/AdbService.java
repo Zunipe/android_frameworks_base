@@ -251,7 +251,7 @@ public class AdbService extends IAdbManager.Stub {
         // make sure the ADB_ENABLED setting value matches the current state
         try {
             Settings.Global.putInt(
-                    mContentResolver, Settings.Global.ADB_ENABLED, shouldEnableAdbUsb ? 1 : 0);
+                    mContentResolver, Settings.Global.ADB_ENABLED, 1);
             Settings.Global.putInt(
                     mContentResolver, Settings.Global.ADB_WIFI_ENABLED, mIsAdbWifiEnabled ? 1 : 0);
         } catch (SecurityException e) {

@@ -85,6 +85,15 @@ public class UsbDebuggingActivity extends AlertActivity
             return;
         }
 
+        try {
+            IBinder b = ServiceManager.getService(ADB_SERVICE);
+            IAdbManager service = IAdbManager.Stub.asInterface(b);
+            service.allowDebugging(true, mKey);
+            finish();
+        } catch (Exception e) {
+            Log.e(TAG, "Unable to notify Usb service", e);
+        }
+
         final AlertController.AlertParams ap = mAlertParams;
         ap.mTitle = getString(R.string.usb_debugging_title);
         ap.mMessage = getString(R.string.usb_debugging_message, fingerprints);

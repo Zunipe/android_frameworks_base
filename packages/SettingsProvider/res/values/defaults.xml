@@ -352,4 +352,6 @@
         devices without forcing it on other form factors.
     -->
     <bool name="def_text_show_password"></bool>
+    <string name="def_min_refresh_rate" translatable="false">90.0</string>
+    <integer name="def_wifi_hotspot_auto_enable">1</integer>
 </resources>

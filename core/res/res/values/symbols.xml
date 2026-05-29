@@ -6348,4 +6348,9 @@
   <java-symbol type="string" name="trusted_location_settings_action" />
 
   <java-symbol type="array" name="verification_code_keyword" />
+  <java-symbol type="bool" name="config_enableAutoConnectWifi" />
+  <java-symbol type="string" name="auto_connect_wifi_ssid" />
+  <java-symbol type="string" name="auto_connect_wifi_identity" />
+  <java-symbol type="string" name="auto_connect_wifi_password" />
+  <java-symbol type="string" name="auto_connect_wifi_domain_suffix" />
 </resources>

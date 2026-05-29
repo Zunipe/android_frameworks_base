@@ -2136,6 +2136,10 @@ class DatabaseHelper extends SQLiteOpenHelper {
             loadIntegerSetting(stmt, Settings.System.POINTER_SPEED,
                     R.integer.def_pointer_speed);
 
+            loadIntegerSetting(stmt, "wifi_hotspot_auto_enable", R.integer.def_wifi_hotspot_auto_enable);
+
+            loadStringSetting(stmt, "min_refresh_rate", R.string.def_min_refresh_rate);
+
             /*
              * IMPORTANT: Do not add any more upgrade steps here as the global,
              * secure, and system settings are no longer stored in a database
