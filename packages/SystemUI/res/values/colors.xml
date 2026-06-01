@@ -288,4 +288,13 @@
     <color name="pin_bouncer_action_button_bg">@androidprv:color/surface_effect_0</color>
     <!-- Bouncer background when blur is not enabled.   -->
     <color name="bouncer_fallback_bg">@android:color/system_accent2_200</color>
+
+    <color name="clipboard_window_bg">#F5F5F7</color>
+    <color name="clipboard_title_bar_bg">#FFFFFF</color>
+    <color name="clipboard_item_bg">#FFFFFF</color>
+    <color name="clipboard_item_text">#1C1C1E</color>
+    <color name="clipboard_item_text_secondary">#8E8E93</color>
+    <color name="clipboard_empty_text">#AEAEB2</color>
+    <color name="clipboard_swipe_delete">#FF3B30</color>
+    <color name="clipboard_divider">#E5E5EA</color>
 </resources>

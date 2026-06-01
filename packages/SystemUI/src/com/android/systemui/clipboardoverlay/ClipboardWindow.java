@@ -2,11 +2,11 @@ package com.android.systemui.clipboardoverlay;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.os.Handler;
-import android.view.Gravity;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -14,10 +14,13 @@ import android.widget.TextView;
 import android.zunipe.IZunipeGestureCallback;
 import android.zunipe.ZunipeInputManager;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.gamemode.DraggableWindowsHelper;
 import com.android.systemui.res.R;
 
 import java.util.ArrayList;
@@ -28,14 +31,13 @@ import javax.inject.Inject;
 
 public class ClipboardWindow {
     private final HashMap<Integer, ArrayList<String>> mClipboardMap = new HashMap<>();
-    private int mCurrentUser;
-
     private final Context mContext;
-    private final WindowManager mWindowManager;
+    private final DraggableWindowsHelper mDraggableWindowsHelper;
     private final Handler mHandler;
     private final ZunipeInputManager mZunipeInputManager;
-    private View mClipboardView;
-    private boolean isShowing = false;
+    private int mCurrentUser;
+    private View mEmptyView;
+    private ClipboardAdapter mAdapter;
 
     private final IZunipeGestureCallback mCallback = new IZunipeGestureCallback.Stub() {
         @Override
@@ -47,16 +49,17 @@ public class ClipboardWindow {
     @Inject
     public ClipboardWindow(Context context,
                            ZunipeInputManager zunipeInputManager,
-                           @Main Handler mainHandler) {
+                           @Main Handler mainHandler,
+                           DraggableWindowsHelper draggableWindowsHelper) {
         zunipeInputManager.registerCallback(mCallback);
         this.mContext = context;
         this.mZunipeInputManager = zunipeInputManager;
         this.mHandler = mainHandler;
-        this.mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        this.mDraggableWindowsHelper = draggableWindowsHelper;
     }
 
     public void show() {
-        if (isShowing) return;
+        if (mDraggableWindowsHelper.isShowing()) return;
         float density = mContext.getResources().getDisplayMetrics().density;
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
@@ -66,65 +69,78 @@ public class ClipboardWindow {
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT
         );
+        Context themedContext = new ContextThemeWrapper(mContext, R.style.Theme_SystemUI);
+        View clipboardView = LayoutInflater.from(themedContext).inflate(R.layout.clipboard_history_layout, null);
+        clipboardView.findViewById(R.id.close_button).setOnClickListener(v -> dismiss());
 
-        mClipboardView = LayoutInflater.from(mContext).inflate(R.layout.clipboard_history_layout, null);
-        mClipboardView.findViewById(R.id.close_button).setOnClickListener(v -> dismiss());
-
-        mClipboardView.findViewById(R.id.title_bar).setOnTouchListener(new View.OnTouchListener() {
-            private int initialX;
-            private int initialY;
-            private float initialTouchX;
-            private float initialTouchY;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        initialX = params.x;
-                        initialY = params.y;
-                        initialTouchX = event.getRawX();
-                        initialTouchY = event.getRawY();
-                        return true;
-
-                    case MotionEvent.ACTION_MOVE:
-                        int deltaX = (int) (event.getRawX() - initialTouchX);
-                        int deltaY = (int) (event.getRawY() - initialTouchY);
-
-                        params.x = initialX + deltaX;
-                        params.y = initialY + deltaY;
-
-                        mWindowManager.updateViewLayout(mClipboardView, params);
-                        return true;
-
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-
-                        return true;
-                }
-                return false;
-            }
-        });
-        RecyclerView recyclerView = mClipboardView.findViewById(R.id.clipboard_recycler_view);
+        RecyclerView recyclerView = clipboardView.findViewById(R.id.clipboard_recycler_view);
+        mEmptyView = clipboardView.findViewById(R.id.empty_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
         List<String> dataList = getClipDataList();
-        ClipboardAdapter adapter = new ClipboardAdapter(dataList);
-        recyclerView.setAdapter(adapter);
+        mAdapter = new ClipboardAdapter(dataList);
+        mAdapter.setOnDataChangedListener(this::updateEmptyState);
+        recyclerView.setAdapter(mAdapter);
 
-        params.gravity = Gravity.CENTER;
+        attachSwipeToDelete(recyclerView);
+        updateEmptyState();
+        mDraggableWindowsHelper.show(params, clipboardView);
+    }
 
-        mWindowManager.addView(mClipboardView, params);
-        isShowing = true;
+    private void attachSwipeToDelete(RecyclerView recyclerView) {
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    mAdapter.removeItem(position);
+                }
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas canvas,
+                                    @NonNull RecyclerView recyclerView,
+                                    @NonNull RecyclerView.ViewHolder viewHolder, float dX,
+                                    float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    getForegroundCard(viewHolder).setTranslationX(dX);
+                }
+            }
+
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView,
+                                  @NonNull RecyclerView.ViewHolder viewHolder) {
+                getForegroundCard(viewHolder).setTranslationX(0f);
+                super.clearView(recyclerView, viewHolder);
+            }
+        };
+
+        new ItemTouchHelper(callback).attachToRecyclerView(recyclerView);
+    }
+
+    private View getForegroundCard(RecyclerView.ViewHolder viewHolder) {
+        return viewHolder.itemView.findViewById(R.id.clipboard_item_card);
+    }
+
+    private void updateEmptyState() {
+        mEmptyView.setVisibility(mAdapter.isEmpty() ? View.VISIBLE : View.GONE);
     }
 
     private void dismiss() {
-        if (mClipboardView != null && mWindowManager != null) {
-            try {
-                mWindowManager.removeView(mClipboardView);
-                isShowing = false;
-                mClipboardView = null;
-            } catch (IllegalArgumentException ignored) {
+        try {
+            if (mDraggableWindowsHelper.dismiss()) {
+                mAdapter = null;
+                mEmptyView = null;
             }
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -160,34 +176,59 @@ public class ClipboardWindow {
     }
 
     private class ClipboardAdapter extends RecyclerView.Adapter<ClipboardAdapter.ViewHolder> {
+        public interface OnDataChangedListener {
+            void onDataChanged();
+        }
+
         private final List<String> mData;
+        private OnDataChangedListener mListener;
 
         public ClipboardAdapter(List<String> data) {
             this.mData = data;
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        public void setOnDataChangedListener(OnDataChangedListener listener) {
+            mListener = listener;
+        }
+
+        public void removeItem(int position) {
+            if (position < 0 || position >= mData.size()) {
+                return;
+            }
+            mData.remove(position);
+            notifyItemRemoved(position);
+            if (mListener != null) {
+                mListener.onDataChanged();
+            }
+        }
+
+        public boolean isEmpty() {
+            return mData.isEmpty();
+        }
+
+        static class ViewHolder extends RecyclerView.ViewHolder {
             TextView textView;
-            View root;
+            View card;
 
             ViewHolder(View view) {
                 super(view);
                 textView = view.findViewById(R.id.clipboard_text);
-                root = view;
+                card = view.findViewById(R.id.clipboard_item_card);
             }
         }
 
+        @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_clipboard, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.textView.setText(mData.get(position));
-            holder.root.setOnClickListener(v -> {
+            holder.card.setOnClickListener(v -> {
                 mZunipeInputManager.pasteString(mData.get(position));
                 dismiss();
             });

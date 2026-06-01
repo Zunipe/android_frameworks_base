@@ -34,9 +34,9 @@ public class GameModeManager {
     /**
      * @hide
      */
-    public boolean setPerfBoost(boolean enable) {
+    public int getCpuFreq(int core) {
         try {
-            return mService.setPerfBoost(enable);
+            return mService.getCpuFreq(core);
         } catch (RemoteException ex) {
             throw ex.rethrowFromSystemServer();
         }
@@ -45,45 +45,11 @@ public class GameModeManager {
     /**
      * @hide
      */
-    public int getCurrentCpuNodeValue(int core) {
+    public int getGpuFreq() {
         try {
-            return mService.getCurrentCpuNodeValue(core);
+            return mService.getGpuFreq();
         } catch (RemoteException ex) {
             throw ex.rethrowFromSystemServer();
         }
     }
-
-    /**
-     * @hide
-     */
-    public int getCurrentGpuNodeValue() {
-        try {
-            return mService.getCurrentGpuNodeValue();
-        } catch (RemoteException ex) {
-            throw ex.rethrowFromSystemServer();
-        }
-    }
-
-    /**
-     * @hide
-     */
-    public void registerCallback(IPerfMonitorCallback callback) {
-        try {
-            mService.registerCallback(callback);
-        } catch (RemoteException ex) {
-            throw ex.rethrowFromSystemServer();
-        }
-    }
-
-    /**
-     * @hide
-     */
-    public void unregisterCallback(IPerfMonitorCallback callback) {
-        try {
-            mService.unregisterCallback(callback);
-        } catch (RemoteException ex) {
-            throw ex.rethrowFromSystemServer();
-        }
-    }
-
 }

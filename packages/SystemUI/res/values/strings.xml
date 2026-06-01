@@ -4587,4 +4587,7 @@
     <string name="mute_switch_title">Mute</string>
     <string name="perf_boost_switch_title">Perf Boost</string>
     <string name="clipboard_history">Clipboard History</string>
+    <string name="clipboard_empty_hint">空空如也</string>
+    <string name="clipboard_title">剪贴板历史</string>
+    <string name="clipboard_delete">删除</string>
 </resources>

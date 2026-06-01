@@ -4358,7 +4358,7 @@ public class AudioService extends IAudioService.Stub
                             mPercentArray[i] = 0;
                             mRemainArray[i] = 0;
                         };
-
+                        int targetStreamType = -100, minRemain = Integer.MAX_VALUE;
                         for (int linkedStream : LINKED_STREAMS) {
                             int linkedAlias = sStreamVolumeAlias.get(linkedStream, -1);
                             VolumeStreamState linkedVss = getVssForStreamOrDefault(linkedAlias);
@@ -4373,42 +4373,48 @@ public class AudioService extends IAudioService.Stub
                                 continue;
                             }
 
-                            int targetIndex = linkedVss.getIndex(linkedDevice);
-
                             if ((originStreamIndex == streamState.getMaxIndex() && direction == AudioManager.ADJUST_RAISE) ||
                                     (originStreamIndex == streamState.getMinIndex() && direction == AudioManager.ADJUST_LOWER)) {
-                                targetIndex = Math.max(linkedVss.getMinIndex(),
-                                        Math.min(linkedVss.getMaxIndex(), linkedVss.getIndex(linkedDevice) + step * direction));
-                            } else {
-                                if ((direction == AudioManager.ADJUST_RAISE && mPercentArray[linkedStream] <= 0) ||
-                                        (direction == AudioManager.ADJUST_LOWER && mPercentArray[linkedStream] >= 0)) {
-                                    sweeper.accept(linkedStream);
+                                int remain = direction == AudioManager.ADJUST_RAISE ?
+                                        linkedVss.mIndexMax - linkedVss.getIndex(linkedDevice) :
+                                        linkedVss.getIndex(linkedDevice) - linkedVss.mIndexMin;
+                                if (remain != 0 && remain < minRemain) {
+                                    minRemain = remain;
+                                    targetStreamType = linkedStream;
                                 }
-                                if (mRemainArray[linkedStream] == 0) {
-                                    mRemainArray[linkedStream] = direction == AudioManager.ADJUST_RAISE ?
-                                            streamState.mIndexMax - originStreamIndex :
-                                            originStreamIndex - streamState.mIndexMin;
-                                }
-                                int remain = mRemainArray[linkedStream];
-                                int change = streamState.getIndex(deviceType) * direction - originStreamIndex * direction;
-                                float percent = 1.0f * change / remain;
+                                continue;
+                            }
 
-                                if (percent >= 1F) {
-                                    targetIndex = direction == AudioManager.ADJUST_RAISE ?
-                                            linkedVss.getMaxIndex() : linkedVss.getMinIndex();
+                            int targetIndex = linkedVss.getIndex(linkedDevice);
+
+                            if ((direction == AudioManager.ADJUST_RAISE && mPercentArray[linkedStream] <= 0) ||
+                                    (direction == AudioManager.ADJUST_LOWER && mPercentArray[linkedStream] >= 0)) {
+                                sweeper.accept(linkedStream);
+                            }
+                            if (mRemainArray[linkedStream] == 0) {
+                                mRemainArray[linkedStream] = direction == AudioManager.ADJUST_RAISE ?
+                                        streamState.mIndexMax - originStreamIndex :
+                                        originStreamIndex - streamState.mIndexMin;
+                            }
+                            int remain = mRemainArray[linkedStream];
+                            int change = streamState.getIndex(deviceType) * direction - originStreamIndex * direction;
+                            float percent = 1.0f * change / remain;
+
+                            if (percent >= 1F) {
+                                targetIndex = direction == AudioManager.ADJUST_RAISE ?
+                                        linkedVss.getMaxIndex() : linkedVss.getMinIndex();
+                                sweeper.accept(linkedStream);
+                            } else {
+                                mPercentArray[linkedStream] += direction == AudioManager.ADJUST_RAISE ?
+                                        (linkedVss.getMaxIndex() - linkedVss.getIndex(linkedDevice)) * percent :
+                                        (linkedVss.getMinIndex() - linkedVss.getIndex(linkedDevice)) * percent;
+                                Log.d("phf", "linkedStream = " + linkedStream + " linkedDevice = " + linkedDevice + " deviceType = " + deviceType +
+                                        " linkedAlias = " + linkedAlias);
+                                if (Math.abs(mPercentArray[linkedStream]) >= 10) {
+                                    targetIndex = (int) mPercentArray[linkedStream] / 10 * 10 + linkedVss.getIndex(linkedDevice);
+                                    targetIndex = Math.max(linkedVss.getMinIndex(), Math.min(linkedVss.getMaxIndex(), targetIndex));
                                     sweeper.accept(linkedStream);
-                                } else {
-                                    mPercentArray[linkedStream] += direction == AudioManager.ADJUST_RAISE ?
-                                            (linkedVss.getMaxIndex() - linkedVss.getIndex(linkedDevice)) * percent :
-                                            (linkedVss.getMinIndex() - linkedVss.getIndex(linkedDevice)) * percent;
-                                    Log.d("phf", "linkedStream = " + linkedStream + " remain = " + remain + " change = " + change +
-                                            " percent = " + percent + " percentArray[linkedStream] = " + mPercentArray[linkedStream]);
-                                    if (Math.abs(mPercentArray[linkedStream]) >= 10) {
-                                        targetIndex = (int) mPercentArray[linkedStream] / 10 * 10 + linkedVss.getIndex(linkedDevice);
-                                        targetIndex = Math.max(linkedVss.getMinIndex(), Math.min(linkedVss.getMaxIndex(), targetIndex));
-                                        sweeper.accept(linkedStream);
-                                        Log.d("phf", "linkedStream = " + linkedStream + " targetIndex = " + targetIndex + " step = " + step);
-                                    }
+                                    Log.d("phf", "linkedStream = " + linkedStream + " targetIndex = " + targetIndex + " step = " + step);
                                 }
                             }
 
@@ -4427,6 +4433,10 @@ public class AudioService extends IAudioService.Stub
                                         linkedVss,
                                         0);
                             }
+                        }
+                        if (targetStreamType != -100) {
+                            adjustStreamVolume(targetStreamType, direction, flags, ada, callingPackage, caller, uid, pid, attributionTag, hasModifyAudioSettings, keyEventMode);
+                            return;
                         }
                     }
                 }

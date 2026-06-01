@@ -5,80 +5,73 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.GradientDrawable;
-import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.os.UserHandle;
-import android.provider.Settings;
-import android.util.TypedValue;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.GridLayout;
-import android.widget.TextView;
 import android.zunipe.GameModeManager;
-import android.zunipe.IPerfMonitorCallback;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.systemui.CoreStartable;
 import com.android.systemui.dagger.qualifiers.Main;
+import com.android.systemui.res.R;
 import com.android.systemui.util.settings.SecureSettings;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class GameModeMonitorService implements CoreStartable {
 
     public static final String TAG = "GameModeMonitorServices";
+    public static final int MSG_UPDATE_FREQ = 1;
     private static final String SETTING_KEY = "show_performance_hud";
-    private View mPopupView;
-    private final TextView[] mCpuTextViews = new TextView[8];
-    private TextView mGpuTextView;
-    private boolean mEnable;
-    private final int[] mValue = new int[9];
-
     private final Context mContext;
     private final Handler mHandler;
     private final GameModeManager mGameModeManager;
-    private final WindowManager mWindowManager;
-    private final InputManager mInputManager;
     private final SecureSettings mSecureSettings;
-
-    private static final String KEY_PERF_POPUP_X = "game_mode_perf_popup_x";
-    private static final String KEY_PERF_POPUP_Y = "game_mode_perf_popup_y";
-
-    private final IPerfMonitorCallback mCallback = new IPerfMonitorCallback.Stub() {
-        @Override
-        public void currentFreqChanging(int[] freqArray) {
-            mHandler.post(() -> {
-                System.arraycopy(freqArray, 0, mValue, 0, freqArray.length);
-                updateFreq();
-            });
-        }
-    };
+    private final DraggableWindowsHelper mDraggableWindowsHelper;
+    private boolean mEnable;
+    private PerfAdapter mPerfAdapter;
 
     @Inject
     public GameModeMonitorService(
             @NonNull @Main Context context,
             GameModeManager GameModeManager,
-            WindowManager windowManager,
-            InputManager inputManager,
-            SecureSettings secureSettings) {
+            SecureSettings secureSettings,
+            DraggableWindowsHelper draggableWindowsHelper) {
         mContext = context;
-        mHandler = new Handler(Looper.getMainLooper());
+        mHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case MSG_UPDATE_FREQ -> {
+                        updateFreq();
+                        Message message = mHandler.obtainMessage(MSG_UPDATE_FREQ);
+                        mHandler.sendMessageDelayed(message, 1000);
+                    }
+                }
+            }
+        };
         mGameModeManager = GameModeManager;
-        mWindowManager = windowManager;
-        mInputManager = inputManager;
         mSecureSettings = secureSettings;
+        mDraggableWindowsHelper = draggableWindowsHelper;
     }
 
     private void updateState() {
         if (mEnable) {
             showPerfPopup();
-            mGameModeManager.registerCallback(mCallback);
         } else {
             dismissPopup();
-            mGameModeManager.unregisterCallback(mCallback);
         }
     }
 
@@ -109,69 +102,40 @@ public class GameModeMonitorService implements CoreStartable {
 
     }
 
-    private void updateFreq() {
-        for (int i = 0; i < 8; i++) {
-            if (mCpuTextViews[i] != null) {
-                mCpuTextViews[i].setText("CPU" + i + ": " + mValue[i] / 1000 + " MHz");
-            }
-        }
-        if (mGpuTextView != null) {
-            mGpuTextView.setText("GPU:" + mValue[8] / 1000000 + " MHz");
-        }
+    private View createPerfGridView() {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.view_perf_grid, null);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        mPerfAdapter = new PerfAdapter();
+        recyclerView.setAdapter(mPerfAdapter);
+
+        initTestData();
+
+        return recyclerView;
     }
 
-    private View createPerfGridView() {
-        float density = mContext.getResources().getDisplayMetrics().density;
-
-        GridLayout gridLayout = new GridLayout(mContext);
-        gridLayout.setColumnCount(2);
-        gridLayout.setPadding((int) (16 * density), (int) (16 * density),
-                (int) (16 * density), (int) (16 * density));
-
+    private void initTestData() {
+        List<PerfItem> list = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            mCpuTextViews[i] = new TextView(mContext);
-            mCpuTextViews[i].setTextColor(Color.GREEN);
-            mCpuTextViews[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-
-            GridLayout.LayoutParams lp = new GridLayout.LayoutParams();
-            lp.width = (int) (120 * density);
-            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            lp.rightMargin = (int) (16 * density);
-            lp.bottomMargin = (int) (8 * density);
-            mCpuTextViews[i].setLayoutParams(lp);
-
-            gridLayout.addView(mCpuTextViews[i]);
+            list.add(new PerfItem("CPU" + i, mGameModeManager.getCpuFreq(i) / 1000 + "Mhz", Color.GREEN));
         }
+        list.add(new PerfItem("GPU", mGameModeManager.getGpuFreq() / 1000 / 1000 + "Mhz", Color.CYAN));
+        mPerfAdapter.setData(list);
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_UPDATE_FREQ), 1000);
+    }
 
-        mGpuTextView = new TextView(mContext);
-        mGpuTextView.setTextColor(Color.CYAN);
-        mGpuTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-
-        GridLayout.LayoutParams gpuLp = new GridLayout.LayoutParams();
-        gpuLp.rowSpec = GridLayout.spec(4);
-        gpuLp.columnSpec = GridLayout.spec(0, 2);
-        gpuLp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        gpuLp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        gpuLp.topMargin = (int) (8 * density);
-        mGpuTextView.setLayoutParams(gpuLp);
-
-        gridLayout.addView(mGpuTextView);
-
-        GradientDrawable bg = new GradientDrawable();
-        bg.setShape(GradientDrawable.RECTANGLE);
-        bg.setCornerRadius(12 * density);
-
-        bg.setColor(0x66000000);
-        bg.setStroke(2, 0xAA575D57);
-        gridLayout.setBackground(bg);
-
-        return gridLayout;
+    private void updateFreq() {
+        for (int i = 0; i < 8; i++) {
+            mPerfAdapter.updateItem(i, mGameModeManager.getCpuFreq(i) / 1000 + "Mhz");
+        }
+        mPerfAdapter.updateItem(8, mGameModeManager.getGpuFreq() / 1000 / 1000 + "Mhz");
     }
 
     private void showPerfPopup() {
-        dismissPopup();
-
-        float density = mContext.getResources().getDisplayMetrics().density;
+        if (mDraggableWindowsHelper.isShowing()) return;
 
         final View popupView = createPerfGridView();
 
@@ -181,62 +145,15 @@ public class GameModeMonitorService implements CoreStartable {
                 WindowManager.LayoutParams.TYPE_NAVIGATION_BAR_PANEL,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
-
-        params.gravity = Gravity.TOP | Gravity.START;
-
-        int defaultX = (int) (20 * density);
-        int defaultY = (int) (120 * density);
-
-        params.x = Settings.Secure.getInt(mContext.getContentResolver(), KEY_PERF_POPUP_X, defaultX);
-        params.y = Settings.Secure.getInt(mContext.getContentResolver(), KEY_PERF_POPUP_Y, defaultY);
-
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            private int initialX;
-            private int initialY;
-            private float initialTouchX;
-            private float initialTouchY;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        initialX = params.x;
-                        initialY = params.y;
-                        initialTouchX = event.getRawX();
-                        initialTouchY = event.getRawY();
-                        return true;
-
-                    case MotionEvent.ACTION_MOVE:
-                        int deltaX = (int) (event.getRawX() - initialTouchX);
-                        int deltaY = (int) (event.getRawY() - initialTouchY);
-
-                        params.x = initialX + deltaX;
-                        params.y = initialY + deltaY;
-
-                        mWindowManager.updateViewLayout(popupView, params);
-                        return true;
-
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        Settings.Secure.putInt(mContext.getContentResolver(), KEY_PERF_POPUP_X, params.x);
-                        Settings.Secure.putInt(mContext.getContentResolver(), KEY_PERF_POPUP_Y, params.y);
-                        return true;
-                }
-                return false;
-            }
-        });
-
-        mPopupView = popupView;
-        mWindowManager.addView(popupView, params);
+        mDraggableWindowsHelper.show(params, popupView);
     }
 
     private void dismissPopup() {
-        if (mPopupView != null && mWindowManager != null) {
-            try {
-                mWindowManager.removeView(mPopupView);
-            } catch (IllegalArgumentException ignored) {
+        try {
+            if (mDraggableWindowsHelper.dismiss()) {
+                mHandler.removeMessages(MSG_UPDATE_FREQ);
             }
-            mPopupView = null;
+        } catch (IllegalArgumentException ignored) {
         }
     }
 }
