@@ -4537,7 +4537,8 @@ public abstract class Context {
                 SEARCH_SERVICE,
                 VERIFICATION_CODE_SERVICE,
                 GAME_MODE_SERVICE,
-                ZUNIPE_INPUT_MANAGER,
+                    ZUNIPE_INPUT_SERVICE,
+                    ZUNIPE_PACKAGE_SERVICE,
                 SENSOR_SERVICE,
                 SENSOR_PRIVACY_SERVICE,
                 STORAGE_SERVICE,
@@ -5098,7 +5099,8 @@ public abstract class Context {
     public static final String SEARCH_SERVICE = "search";
     public static final String VERIFICATION_CODE_SERVICE = "verification_code";
     public static final String GAME_MODE_SERVICE = "game_mode";
-    public static final String ZUNIPE_INPUT_MANAGER = "zunipe_input_manager";
+    public static final String ZUNIPE_INPUT_SERVICE = "zunipe_input_manager";
+    public static final String ZUNIPE_PACKAGE_SERVICE = "zunipe_package_manager";
 
     /**
      * Use with {@link #getSystemService(String)} to retrieve a {@link

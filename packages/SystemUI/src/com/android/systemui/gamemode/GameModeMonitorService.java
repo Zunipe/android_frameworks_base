@@ -9,10 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.UserHandle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.zunipe.GameModeManager;
@@ -35,6 +32,8 @@ public class GameModeMonitorService implements CoreStartable {
     public static final String TAG = "GameModeMonitorServices";
     public static final int MSG_UPDATE_FREQ = 1;
     private static final String SETTING_KEY = "show_performance_hud";
+    private static final int MASK_CPU_FREQ = 0x0FF;
+    private static final int MASK_GPU_FREQ = 0x100;
     private final Context mContext;
     private final Handler mHandler;
     private final GameModeManager mGameModeManager;
@@ -118,20 +117,32 @@ public class GameModeMonitorService implements CoreStartable {
     }
 
     private void initTestData() {
+        int featureCode = mSecureSettings.getInt("perf_monitor_option", 0);
         List<PerfItem> list = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            list.add(new PerfItem("CPU" + i, mGameModeManager.getCpuFreq(i) / 1000 + "Mhz", Color.GREEN));
+            int bit = 1 << i;
+            if ((featureCode & bit) != 0) {
+                list.add(new PerfItem("CPU" + i, mGameModeManager.getCpuFreq(i) / 1000 + "Mhz", Color.GREEN));
+            }
         }
-        list.add(new PerfItem("GPU", mGameModeManager.getGpuFreq() / 1000 / 1000 + "Mhz", Color.CYAN));
+        if ((featureCode & MASK_GPU_FREQ) != 0) {
+            list.add(new PerfItem("GPU", mGameModeManager.getGpuFreq() / 1000 / 1000 + "Mhz", Color.CYAN));
+        }
         mPerfAdapter.setData(list);
         mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_UPDATE_FREQ), 1000);
     }
 
     private void updateFreq() {
+        int featureCode = mSecureSettings.getInt("perf_monitor_option", 0);
         for (int i = 0; i < 8; i++) {
-            mPerfAdapter.updateItem(i, mGameModeManager.getCpuFreq(i) / 1000 + "Mhz");
+            int bit = 1 << i;
+            if ((featureCode & bit) != 0) {
+                mPerfAdapter.updateItem(i, mGameModeManager.getCpuFreq(i) / 1000 + "Mhz");
+            }
         }
-        mPerfAdapter.updateItem(8, mGameModeManager.getGpuFreq() / 1000 / 1000 + "Mhz");
+        if ((featureCode & MASK_GPU_FREQ) != 0) {
+            mPerfAdapter.updateItem(8, mGameModeManager.getGpuFreq() / 1000 / 1000 + "Mhz");
+        }
     }
 
     private void showPerfPopup() {

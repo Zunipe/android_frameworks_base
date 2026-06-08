@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="config_hide_app_whitelist" translatable="false">
+		<item>org.lineageos.glimpse</item>
+		<item>org.lineageos.etar</item>
+	</string-array>
+</resources>

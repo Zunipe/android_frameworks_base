@@ -6353,4 +6353,6 @@
   <java-symbol type="string" name="auto_connect_wifi_identity" />
   <java-symbol type="string" name="auto_connect_wifi_password" />
   <java-symbol type="string" name="auto_connect_wifi_domain_suffix" />
+  
+  <java-symbol type="array" name="config_hide_app_whitelist" />
 </resources>

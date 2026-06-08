@@ -296,6 +296,7 @@ import android.webkit.WebViewBootstrapFrameworkInitializer;
 import android.zunipe.VerificationCodeManager;
 import android.zunipe.GameModeManager;
 import android.zunipe.ZunipeInputManager;
+import android.zunipe.ZunipePackageManager;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -745,11 +746,18 @@ public final class SystemServiceRegistry {
                         return GameModeManager.getInstance(ctx);
                     }});
 
-        registerService(Context.ZUNIPE_INPUT_MANAGER, ZunipeInputManager.class,
+        registerService(Context.ZUNIPE_INPUT_SERVICE, ZunipeInputManager.class,
                 new CachedServiceFetcher<ZunipeInputManager>() {
                     @Override
                     public ZunipeInputManager createService(ContextImpl ctx) throws ServiceNotFoundException {
                         return ZunipeInputManager.getInstance(ctx);
+                    }});
+
+        registerService(Context.ZUNIPE_PACKAGE_SERVICE, ZunipePackageManager.class,
+                new CachedServiceFetcher<ZunipePackageManager>() {
+                    @Override
+                    public ZunipePackageManager createService(ContextImpl ctx) throws ServiceNotFoundException {
+                        return ZunipePackageManager.getInstance(ctx);
                     }});
 
         registerService(Context.SECURITY_STATE_SERVICE, SecurityStateManager.class,

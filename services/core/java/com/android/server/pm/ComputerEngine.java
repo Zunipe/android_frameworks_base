@@ -623,6 +623,39 @@ public class ComputerEngine implements Computer {
             SaferIntentUtils.enforceIntentFilterMatching(args, list);
         }
 
+        List<String> hideAppList = Arrays.asList(mContext.getResources().getStringArray(
+          com.android.internal.R.array.config_hide_app_whitelist));
+
+        boolean isDialer = false;
+        String[] callingPackages = getPackagesForUid(filterCallingUid);
+        android.util.Log.d("hjyy", "filterCallingUid = " + filterCallingUid + " callingPid = " + callingPid);
+        if (callingPackages != null) {
+        for (String pkg : callingPackages) {
+            android.util.Log.d("hjyy", "pkg = " + pkg);
+            if ("com.android.dialer".equals(pkg)) {
+                isDialer = true;
+                break;
+              }
+          }
+        }
+
+        if (!isDialer && list != null && !list.isEmpty() && !hideAppList.isEmpty()) {
+            java.util.Iterator<ResolveInfo> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                ResolveInfo ri = iterator.next();
+                String packageName = null;
+                if (ri.activityInfo != null) {
+                    packageName = ri.activityInfo.packageName;
+                } else if (ri.serviceInfo != null) {
+                    packageName = ri.serviceInfo.packageName;
+                }
+
+                if (packageName != null && hideAppList.contains(packageName)) {
+                    iterator.remove();
+                }
+            }
+        }
+
         return skipPostResolution ? list : applyPostResolutionFilter(
                 list, instantAppPkgName, allowDynamicSplits, filterCallingUid,
                 resolveForStart, userId, intent);

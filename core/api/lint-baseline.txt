@@ -1265,6 +1265,12 @@ RequiresPermission: android.webkit.WebSettings#setGeolocationEnabled(boolean):
 
 ServiceName: android.content.Context#ZUNIPE_INPUT_MANAGER:
     Inconsistent service constant name; expected `ZUNIPE_INPUT_MANAGER_SERVICE`, was `ZUNIPE_INPUT_MANAGER`
+ServiceName: android.content.Context#ZUNIPE_INPUT_SERVICE:
+    Inconsistent service value; expected `zunipe_input`, was `zunipe_input_manager` (Note: Do not change the name of already released services, which will break tools using `adb shell dumpsys`. Instead add `@SuppressLint("ServiceName"))`
+ServiceName: android.content.Context#ZUNIPE_PACKAGE_MANAGER:
+    Inconsistent service constant name; expected `ZUNIPE_PACKAGE_MANAGER_SERVICE`, was `ZUNIPE_PACKAGE_MANAGER`
+ServiceName: android.content.Context#ZUNIPE_PACKAGE_SERVICE:
+    Inconsistent service value; expected `zunipe_package`, was `zunipe_package_manager` (Note: Do not change the name of already released services, which will break tools using `adb shell dumpsys`. Instead add `@SuppressLint("ServiceName"))`
 
 
 Todo: android.hardware.camera2.params.StreamConfigurationMap:
@@ -1521,6 +1527,12 @@ UnflaggedApi: android.content.Context#VERIFICATION_CODE_SERVICE:
     New API must be flagged with @FlaggedApi: field android.content.Context.VERIFICATION_CODE_SERVICE
 UnflaggedApi: android.content.Context#ZUNIPE_INPUT_MANAGER:
     New API must be flagged with @FlaggedApi: field android.content.Context.ZUNIPE_INPUT_MANAGER
+UnflaggedApi: android.content.Context#ZUNIPE_INPUT_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.Context.ZUNIPE_INPUT_SERVICE
+UnflaggedApi: android.content.Context#ZUNIPE_PACKAGE_MANAGER:
+    New API must be flagged with @FlaggedApi: field android.content.Context.ZUNIPE_PACKAGE_MANAGER
+UnflaggedApi: android.content.Context#ZUNIPE_PACKAGE_SERVICE:
+    New API must be flagged with @FlaggedApi: field android.content.Context.ZUNIPE_PACKAGE_SERVICE
 UnflaggedApi: android.content.ContextParams#shouldRegisterAttributionSource():
     New API must be flagged with @FlaggedApi: method android.content.ContextParams.shouldRegisterAttributionSource()
 UnflaggedApi: android.content.ContextParams.Builder#setShouldRegisterAttributionSource(boolean):
@@ -1823,3 +1835,5 @@ UnflaggedApi: android.zunipe.ZunipeInputManager#TAG:
     New API must be flagged with @FlaggedApi: field android.zunipe.ZunipeInputManager.TAG
 UnflaggedApi: android.zunipe.ZunipeInputManager#TYPE_GESTURE_THREE_FINGER_SLIDE:
     New API must be flagged with @FlaggedApi: field android.zunipe.ZunipeInputManager.TYPE_GESTURE_THREE_FINGER_SLIDE
+UnflaggedApi: android.zunipe.ZunipePackageManager:
+    New API must be flagged with @FlaggedApi: class android.zunipe.ZunipePackageManager

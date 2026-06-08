@@ -11,7 +11,7 @@ import android.os.ServiceManager.ServiceNotFoundException;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 
-@SystemService(Context.ZUNIPE_INPUT_MANAGER)
+@SystemService(Context.ZUNIPE_INPUT_SERVICE)
 public class ZunipeInputManager {
     public static final String TAG = "ZunipeInputManager";
     public static final int TYPE_GESTURE_THREE_FINGER_SLIDE = 1;
@@ -29,7 +29,7 @@ public class ZunipeInputManager {
         mInputManager = mContext.getSystemService(InputManager.class);
         mClipboardManager = mContext.getSystemService(ClipboardManager.class);
         mService = IZunipeInputManager.Stub.asInterface(
-                ServiceManager.getServiceOrThrow(Context.ZUNIPE_INPUT_MANAGER));
+                ServiceManager.getServiceOrThrow(Context.ZUNIPE_INPUT_SERVICE));
     }
 
     /**

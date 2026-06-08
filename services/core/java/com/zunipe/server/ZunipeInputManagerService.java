@@ -24,7 +24,6 @@ public class ZunipeInputManagerService extends IZunipeInputManager.Stub {
 
     private final Context mContext;
 
-    private InputMonitor mInputMonitor;
     private boolean mIsThreeFingerTracking = false;
     private float mInitialY1 = 0;
     private float mInitialY2 = 0;
@@ -49,7 +48,7 @@ public class ZunipeInputManagerService extends IZunipeInputManager.Stub {
         @Override
         public void onStart() {
             mService = new ZunipeInputManagerService(getContext());
-            publishBinderService(Context.ZUNIPE_INPUT_MANAGER, mService);
+            publishBinderService(Context.ZUNIPE_INPUT_SERVICE, mService);
         }
 
         @Override

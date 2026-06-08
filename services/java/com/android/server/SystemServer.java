@@ -319,6 +319,7 @@ import com.zunipe.server.AutoHotspotSystemService;
 import com.zunipe.server.GameModeManagerService;
 import com.zunipe.server.VerificationCodeManagerService;
 import com.zunipe.server.ZunipeInputManagerService;
+import com.zunipe.server.ZunipePackageManagerService;
 
 import dalvik.system.VMDebug;
 import dalvik.system.VMRuntime;
@@ -2355,6 +2356,10 @@ public final class SystemServer implements Dumpable {
 
             t.traceBegin("ZunipeInputManagerService");
             mSystemServiceManager.startService(ZunipeInputManagerService.Lifecycle.class);
+            t.traceEnd();
+
+            t.traceBegin("ZunipePackageManagerService");
+            mSystemServiceManager.startService(ZunipePackageManagerService.Lifecycle.class);
             t.traceEnd();
 
             t.traceBegin("StartNotificationManager");

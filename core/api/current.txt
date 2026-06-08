@@ -11418,7 +11418,8 @@ package android.content {
     field public static final String WIFI_RTT_RANGING_SERVICE = "wifirtt";
     field public static final String WIFI_SERVICE = "wifi";
     field @UiContext public static final String WINDOW_SERVICE = "window";
-    field public static final String ZUNIPE_INPUT_MANAGER = "zunipe_input_manager";
+    field public static final String ZUNIPE_INPUT_SERVICE = "zunipe_input_manager";
+    field public static final String ZUNIPE_PACKAGE_SERVICE = "zunipe_package_manager";
   }
 
   public static final class Context.BindServiceFlags {
