@@ -43,7 +43,6 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
 
     public ZunipePackageManagerService(Context context) {
         mContext = context;
-
     }
 
     public static class Lifecycle extends SystemService {

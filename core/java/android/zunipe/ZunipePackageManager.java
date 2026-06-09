@@ -1,7 +1,6 @@
 package android.zunipe;
 
 import android.annotation.SystemService;
-import android.content.ComponentName;
 import android.content.Context;
 import android.os.Binder;
 import android.os.RemoteException;
@@ -10,9 +9,6 @@ import android.os.ServiceManager.ServiceNotFoundException;
 
 import java.util.List;
 
-/**
- * @hide
- */
 @SystemService(Context.ZUNIPE_PACKAGE_SERVICE)
 public class ZunipePackageManager {
     private final Context mContext;
@@ -24,9 +20,11 @@ public class ZunipePackageManager {
         mContext = context;
         mService = IZunipePackageManager.Stub.asInterface(
                 ServiceManager.getServiceOrThrow(Context.ZUNIPE_PACKAGE_SERVICE));
-
     }
 
+    /**
+     * @hide
+     */
     public static ZunipePackageManager getInstance(Context cxt) throws ServiceNotFoundException {
         synchronized (sInstanceSync) {
             if (sInstance == null) {
