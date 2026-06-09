@@ -481,6 +481,32 @@ InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/dcabbf69fbe8e3
     Invalid @hide syntax, must be a block tag
 InvalidJavadoc: /home/data1/penghanfeng/test/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/out/srcjars/android/companion/datatransfer/continuity/IUniversalClipboardManager.java:
     Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/adb/ADBRootService.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/app/ActivityManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/content/BroadcastReceiver.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/content/Intent.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/hardware/camera2/impl/ExtensionKey.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/hardware/camera2/impl/PublicKey.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/hardware/camera2/params/StreamConfigurationMap.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/android/os/BatteryManager.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/base/core/java/com/android/internal/util/DataClass.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/frameworks/libs/modules-utils/java/android/annotation/Hide.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/out/srcjars/android/app/admin/MultiUserDeviceProvisioningParamsTransport.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/out/srcjars/android/app/admin/PolicyValueTransport.java:
+    Invalid @hide syntax, must be a block tag
+InvalidJavadoc: /home/data2/huangjunye/lineageOS/out/soong/.temp/sbox/dcabbf69fbe8e32ae16e786d21b129ef1759ab95/out/srcjars/android/companion/datatransfer/continuity/IUniversalClipboardManager.java:
+    Invalid @hide syntax, must be a block tag
 InvalidJavadoc: PsiDocComment:
     Invalid @hide syntax, must be a block tag
 
@@ -515,6 +541,14 @@ MissingGetterMatchingBuilder: android.os.RemoteCallbackList.Builder#setInterface
 
 MissingNullability: android.zunipe.VerificationCodeManager#VerificationCodeManager(android.content.Context) parameter #0:
     Missing nullability on parameter `context` in method `VerificationCodeManager`
+MissingNullability: android.zunipe.ZunipePackageManager#getHideApplicationList():
+    Missing nullability on method `getHideApplicationList` return
+MissingNullability: android.zunipe.ZunipePackageManager#hideApplication(String) parameter #0:
+    Missing nullability on parameter `packageName` in method `hideApplication`
+MissingNullability: android.zunipe.ZunipePackageManager#revealApplication(String) parameter #0:
+    Missing nullability on parameter `packageName` in method `revealApplication`
+MissingNullability: android.zunipe.ZunipePackageManager#startHideActivity(String) parameter #0:
+    Missing nullability on parameter `packageName` in method `startHideActivity`
 
 
 PublicTypedef: android.telecom.Call.AudioProcessingUseCase:
@@ -1837,3 +1871,11 @@ UnflaggedApi: android.zunipe.ZunipeInputManager#TYPE_GESTURE_THREE_FINGER_SLIDE:
     New API must be flagged with @FlaggedApi: field android.zunipe.ZunipeInputManager.TYPE_GESTURE_THREE_FINGER_SLIDE
 UnflaggedApi: android.zunipe.ZunipePackageManager:
     New API must be flagged with @FlaggedApi: class android.zunipe.ZunipePackageManager
+UnflaggedApi: android.zunipe.ZunipePackageManager#getHideApplicationList():
+    New API must be flagged with @FlaggedApi: method android.zunipe.ZunipePackageManager.getHideApplicationList()
+UnflaggedApi: android.zunipe.ZunipePackageManager#hideApplication(String):
+    New API must be flagged with @FlaggedApi: method android.zunipe.ZunipePackageManager.hideApplication(String)
+UnflaggedApi: android.zunipe.ZunipePackageManager#revealApplication(String):
+    New API must be flagged with @FlaggedApi: method android.zunipe.ZunipePackageManager.revealApplication(String)
+UnflaggedApi: android.zunipe.ZunipePackageManager#startHideActivity(String):
+    New API must be flagged with @FlaggedApi: method android.zunipe.ZunipePackageManager.startHideActivity(String)

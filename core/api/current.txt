@@ -63698,6 +63698,13 @@ package android.zunipe {
     field public static final int TYPE_GESTURE_THREE_FINGER_SLIDE = 1; // 0x1
   }
 
+  public class ZunipePackageManager {
+    method public java.util.List<java.lang.String> getHideApplicationList();
+    method public void hideApplication(String);
+    method public void revealApplication(String);
+    method public void startHideActivity(String);
+  }
+
 }
 
 package javax.microedition.khronos.egl {
