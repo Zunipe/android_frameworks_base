@@ -40,9 +40,15 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
     private final Context mContext;
     private final HashMap<String, List<String>> mCurrentHideAppMap = new HashMap<>();
     private final Object mLock = new Object();
+    private static ZunipePackageManagerService sInstance;
 
     public ZunipePackageManagerService(Context context) {
         mContext = context;
+        sInstance = this;
+    }
+
+    public static ZunipePackageManagerService getInstance() {
+        return sInstance;
     }
 
     public static class Lifecycle extends SystemService {
@@ -212,17 +218,24 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
 
     @Override
     public void startHideActivity(String packageName) {
-        if (mCurrentHideAppMap.containsKey(packageName)) {
-            List<String> list = mCurrentHideAppMap.get(packageName);
-            if (!list.isEmpty()) {
-                Intent intent = new Intent();
-                String[] ttt = list.getFirst().split("/");
-                if (ttt.length == 2) {
-                    ComponentName name = new ComponentName(ttt[0], ttt[1]);
-                    intent.setComponent(name);
-                    mContext.startActivity(intent);
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            if (mCurrentHideAppMap.containsKey(packageName)) {
+                List<String> list = mCurrentHideAppMap.get(packageName);
+                if (!list.isEmpty()) {
+                    Intent intent = new Intent();
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    String[] ttt = list.getFirst().split("/");
+                    android.util.Log.d("hjyy", "ttt[0] = " + ttt[0] + " ttt[1] = " + ttt[1]);
+                    if (ttt.length == 2) {
+                        ComponentName name = new ComponentName(ttt[0], ttt[1]);
+                        intent.setComponent(name);
+                        mContext.startActivity(intent);
+                    }
                 }
             }
+        } finally {
+            Binder.restoreCallingIdentity(identity);
         }
     }
 
