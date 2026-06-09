@@ -36,10 +36,10 @@ public class ZunipePackageManager {
         return sInstance;
     }
 
-    public void startHideActivity(ComponentName componentName) {
+    public void startHideActivity(String packageName) {
         long token = Binder.clearCallingIdentity();
         try {
-            mService.startHideActivity(componentName);
+            mService.startHideActivity(packageName);
         } catch (RemoteException ex) {
             throw ex.rethrowFromSystemServer();
         }
