@@ -643,7 +643,10 @@ public class ComputerEngine implements Computer {
                         } else if (ri.serviceInfo != null) {
                             packageName = ri.serviceInfo.packageName;
                         }
-
+                        int uid = getPackageUid(packageName, 0, userId);
+                        if (uid == filterCallingUid) {
+                            continue;
+                        }
                         if (packageName != null && hideAppList.contains(packageName)) {
                             iterator.remove();
                         }

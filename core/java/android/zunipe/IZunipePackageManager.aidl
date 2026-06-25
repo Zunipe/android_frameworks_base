@@ -1,6 +1,6 @@
 package android.zunipe;
 
-import android.content.ComponentName;
+import android.content.pm.ResolveInfo;
 
 /** @hide */
 interface IZunipePackageManager {
@@ -8,4 +8,5 @@ interface IZunipePackageManager {
     void hideApplication(in String packageName);
     void revealApplication(in String packageName);
     List<String> getHideApplicationList();
+    ResolveInfo getResolveInfo(in String packageName);
 }

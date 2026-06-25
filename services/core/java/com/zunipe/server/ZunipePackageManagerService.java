@@ -1,39 +1,35 @@
 package com.zunipe.server;
 
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.UserHandle;
 import android.util.AtomicFile;
+import android.util.Log;
 import android.util.Slog;
 import android.zunipe.IZunipePackageManager;
-
 import com.android.server.SystemService;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
     public static final String TAG = "ZunipePackageManagerService";
@@ -54,165 +50,108 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
     public static class Lifecycle extends SystemService {
         private ZunipePackageManagerService mService;
         private final Object mFileLock = new Object();
-        private final AtomicFile mAtomicFile;
-        private static final File CONFIG_FILE = new File(Environment.getDataSystemDirectory(), "hide_app_config.xml");
-
+        private static final String CONFIG_NAME = "hide_app_config.xml";
+        private final Context mContext;
 
         public Lifecycle(Context context) {
             super(context);
-            mAtomicFile = new AtomicFile(CONFIG_FILE);
+            mContext = context;
         }
 
         @Override
-        public void onUserStarting(TargetUser user) {
-            HashMap<String, List<String>> resultData = mService.mCurrentHideAppMap;
-            int userId = user.getUserIdentifier();
-            synchronized (mFileLock) {
-                File file = mAtomicFile.getBaseFile();
-                if (!file.exists() || file.length() == 0) {
-                    return;
-                }
-
-                try (FileInputStream fis = mAtomicFile.openRead()) {
-                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder builder = factory.newDocumentBuilder();
-                    Document doc = builder.parse(fis);
-                    Element root = doc.getDocumentElement();
-
-                    // 找到指定 user id 的节点
-                    Element userElement = findUserElement(root, userId);
-                    if (userElement == null) {
-                        return;
-                    }
-
-                    // 解析该用户下的 applications
-                    NodeList appNodes = userElement.getElementsByTagName("application");
-                    for (int i = 0; i < appNodes.getLength(); i++) {
-                        Node appNode = appNodes.item(i);
-                        if (appNode.getNodeType() == Node.ELEMENT_NODE) {
-                            Element appEle = (Element) appNode;
-                            String pkgName = appEle.getAttribute("package");
-
-                            List<String> values = new ArrayList<>();
-                            NodeList itemNodes = appEle.getElementsByTagName("item");
-                            for (int j = 0; j < itemNodes.getLength(); j++) {
-                                Node itemNode = itemNodes.item(j);
-                                if (itemNode.getNodeType() == Node.ELEMENT_NODE) {
-                                    values.add(((Element) itemNode).getAttribute("value"));
-                                }
-                            }
-                            resultData.put(pkgName, values);
-                        }
-                    }
-                } catch (Exception e) {
-                    Slog.e(TAG, "Failed to read user data for user: " + userId, e);
-                }
+        public void onUserSwitching(TargetUser from, TargetUser to) {
+            if (from != null) {
+                saveConfig(from.getUserIdentifier());
             }
-        }
-
-        @Override
-        public void onUserStopping(TargetUser user) {
-            int userId = user.getUserIdentifier();
-            HashMap<String, List<String>> currentData = new HashMap<>(mService.mCurrentHideAppMap);
-            synchronized (mFileLock) {
-                FileOutputStream fos = null;
-                try {
-                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder builder = factory.newDocumentBuilder();
-                    Document doc;
-
-                    File file = mAtomicFile.getBaseFile();
-                    if (file.exists() && file.length() > 0) {
-                        // 1. 如果文件存在，直接解析为 DOM 树
-                        try (FileInputStream fis = mAtomicFile.openRead()) {
-                            doc = builder.parse(fis);
-                        }
-                    } else {
-                        // 2. 如果文件不存在，初始化全新的 DOM 树
-                        doc = builder.newDocument();
-                        Element root = doc.createElement("hide-application");
-                        root.setAttribute("version", "1");
-                        doc.appendChild(root);
-                    }
-
-                    Element root = doc.getDocumentElement();
-
-                    // 3. 查找是否已存在该用户的 <user id="X"> 节点
-                    Element userElement = findUserElement(root, userId);
-                    if (userElement != null) {
-                        // 如果存在旧数据，直接把旧的 <user> 节点删掉
-                        root.removeChild(userElement);
-                    }
-
-                    // 4. 创建新的 <user id="X"> 节点并挂载你的 HashMap
-                    Element newUserElement = doc.createElement("user");
-                    newUserElement.setAttribute("id", String.valueOf(userId));
-
-                    for (Map.Entry<String, List<String>> entry : currentData.entrySet()) {
-                        String pkgName = entry.getKey();
-                        List<String> values = entry.getValue();
-                        if (pkgName == null || values == null) continue;
-
-                        // 对应 <application package="xxxx">
-                        Element appElement = doc.createElement("application");
-                        appElement.setAttribute("package", pkgName);
-
-                        for (String val : values) {
-                            if (val == null) continue;
-                            Element itemElement = doc.createElement("item");
-                            itemElement.setAttribute("value", val);
-                            appElement.appendChild(itemElement);
-                        }
-                        newUserElement.appendChild(appElement);
-                    }
-
-                    // 将新组装的当前用户节点放回根节点
-                    root.appendChild(newUserElement);
-
-                    // 5. 通过 AtomicFile 安全地写回磁盘
-                    fos = mAtomicFile.startWrite();
-                    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                    Transformer transformer = transformerFactory.newTransformer();
-
-                    // 规范输出格式（换行和缩进）
-                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-
-                    DOMSource source = new DOMSource(doc);
-                    StreamResult result = new StreamResult(fos);
-                    transformer.transform(source, result);
-
-                    mAtomicFile.finishWrite(fos);
-                    mService.mCurrentHideAppMap.clear();
-                    Slog.i(TAG, "Successfully updated hide-application config for user: " + userId);
-                } catch (Exception e) {
-                    Slog.e(TAG, "Failed to write user data for user: " + userId, e);
-                    if (fos != null) {
-                        mAtomicFile.failWrite(fos);
-                    }
-                }
-            }
+            loadConfig(to.getUserIdentifier());
         }
 
         @Override
         public void onStart() {
             mService = new ZunipePackageManagerService(getContext());
             publishBinderService(Context.ZUNIPE_PACKAGE_SERVICE, mService);
+
+            loadConfig(0);
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(Intent.ACTION_SHUTDOWN);
+            filter.addAction(Intent.ACTION_REBOOT);
+
+            mContext.registerReceiverAsUser(new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String action = intent.getAction();
+                    Slog.i(TAG, "Received shutdown intent: " + action + ", preparing to save data...");
+                    int currentUserId = ActivityManager.getCurrentUser();
+                    saveConfig(currentUserId);
+                }
+            }, UserHandle.ALL, filter, null, null);
         }
 
-        private Element findUserElement(Element root, int userId) {
-            NodeList userNodes = root.getElementsByTagName("user");
-            String targetIdStr = String.valueOf(userId);
-            for (int i = 0; i < userNodes.getLength(); i++) {
-                Node node = userNodes.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element userEle = (Element) node;
-                    if (targetIdStr.equals(userEle.getAttribute("id"))) {
-                        return userEle;
+        private void saveConfig(int userId) {
+            synchronized (mFileLock) {
+                File userSystemDir = Environment.getUserSystemDirectory(userId);
+                File config = new File(userSystemDir, CONFIG_NAME);
+                if (!mService.mCurrentHideAppMap.isEmpty()) {
+                    FileOutputStream fos;
+                    try {
+                        if (!config.exists()) {
+                            if (!config.createNewFile()) {
+                                return;
+                            }
+                        }
+                        Log.d(TAG, "onUserSwitching saveConfig userId = " + userId);
+                        AtomicFile atomicFile = new AtomicFile(config);
+                        fos = atomicFile.startWrite();
+                        JSONObject jsonObject = new JSONObject();
+                        for (Map.Entry<String, List<String>> entry : mService.mCurrentHideAppMap.entrySet()) {
+                            JSONArray jsonArray = new JSONArray();
+                            if (entry.getValue() != null) {
+                                for (String value : entry.getValue()) {
+                                    jsonArray.put(value);
+                                }
+                            }
+                            jsonObject.put(entry.getKey(), jsonArray);
+                        }
+                        byte[] data = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
+                        fos.write(data, 0, data.length);
+                        atomicFile.finishWrite(fos);
+                    } catch (Exception e) {
+                        Slog.e(TAG, "Failed to parse Map to JSON string", e);
                     }
                 }
             }
-            return null;
+        }
+
+        private void loadConfig(int userId) {
+            synchronized (mFileLock) {
+                File userSystemDir = Environment.getUserSystemDirectory(userId);
+                File config = new File(userSystemDir, CONFIG_NAME);
+                mService.mCurrentHideAppMap.clear();
+                if (config.exists()) {
+                    AtomicFile atomicFile = new AtomicFile(config);
+                    try (FileInputStream fis = atomicFile.openRead()) {
+                        Log.d(TAG, "onUserSwitching loadConfig userId = " + userId);
+                        byte[] buffer = new byte[fis.available()];
+                        int bytesRead = fis.read(buffer);
+                        if (bytesRead > 0) {
+                            String jsonString = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
+                            JSONObject jsonObject = new JSONObject(jsonString);
+                            Iterator<String> keys = jsonObject.keys();
+                            while (keys.hasNext()) {
+                                String key = keys.next();
+                                JSONArray jsonArray = jsonObject.getJSONArray(key);
+                                List<String> valueList = new ArrayList<>();
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    valueList.add(jsonArray.getString(i));
+                                }
+                                mService.mCurrentHideAppMap.put(key, valueList);
+                            }
+                        }
+                    } catch (Exception e) {
+                        Slog.e(TAG, "Failed to parse JSON string to Map", e);
+                    }
+                }
+            }
         }
     }
 
@@ -226,7 +165,6 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
                     Intent intent = new Intent();
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     String[] ttt = list.getFirst().split("/");
-                    android.util.Log.d("hjyy", "ttt[0] = " + ttt[0] + " ttt[1] = " + ttt[1]);
                     if (ttt.length == 2) {
                         ComponentName name = new ComponentName(ttt[0], ttt[1]);
                         intent.setComponent(name);
@@ -253,7 +191,6 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
             if (launcherComponents.isEmpty()) {
                 return;
             }
-
             mCurrentHideAppMap.put(packageName, launcherComponents);
         }
     }
@@ -270,20 +207,47 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
         return new ArrayList<>(mCurrentHideAppMap.keySet());
     }
 
-    private List<String> getLauncherComponentsForPackage(String packageName, int userId) {
-        List<String> componentNames = new ArrayList<>();
+    @Override
+    public ResolveInfo getResolveInfo(String packageName) {
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            if (!mCurrentHideAppMap.containsKey(packageName)) {
+                return null;
+            }
+            int callingUid = Binder.getCallingUid();
+            int userId = UserHandle.getUserId(callingUid);
+            List<ResolveInfo> resolveInfos = getLauncherResolveInfoForPackage(packageName, userId);
+            if (!resolveInfos.isEmpty()) {
+                return resolveInfos.getFirst();
+            }
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
+        return null;
+    }
 
+    private List<ResolveInfo> getLauncherResolveInfoForPackage(String packageName, int userId) {
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         mainIntent.setPackage(packageName);
 
         try {
-            List<ResolveInfo> apps = android.app.AppGlobals.getPackageManager().queryIntentActivities(
+            return android.app.AppGlobals.getPackageManager().queryIntentActivities(
                     mainIntent,
                     mainIntent.resolveTypeIfNeeded(mContext.getContentResolver()),
                     PackageManager.MATCH_DIRECT_BOOT_AWARE | PackageManager.MATCH_DIRECT_BOOT_UNAWARE,
                     userId
             ).getList();
+        } catch (Exception e) {
+            Slog.e(TAG, "queryIntentActivities 发生异常，可能包名不存在", e);
+        }
+        return new ArrayList<>();
+    }
+
+    private List<String> getLauncherComponentsForPackage(String packageName, int userId) {
+        List<String> componentNames = new ArrayList<>();
+        try {
+            List<ResolveInfo> apps = getLauncherResolveInfoForPackage(packageName, userId);
 
             if (apps != null && !apps.isEmpty()) {
                 for (ResolveInfo info : apps) {
@@ -296,7 +260,6 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
         } catch (Exception e) {
             Slog.e(TAG, "queryIntentActivities 发生异常，可能包名不存在", e);
         }
-
         return componentNames;
     }
 }

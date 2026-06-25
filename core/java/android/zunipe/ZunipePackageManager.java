@@ -2,6 +2,7 @@ package android.zunipe;
 
 import android.annotation.SystemService;
 import android.content.Context;
+import android.content.pm.ResolveInfo;
 import android.os.Binder;
 import android.os.RemoteException;
 import android.os.ServiceManager;
@@ -35,13 +36,11 @@ public class ZunipePackageManager {
     }
 
     public void startHideActivity(String packageName) {
-        long token = Binder.clearCallingIdentity();
         try {
             mService.startHideActivity(packageName);
         } catch (RemoteException ex) {
             throw ex.rethrowFromSystemServer();
         }
-        Binder.restoreCallingIdentity(token);
     }
 
     public void hideApplication(String packageName) {
@@ -63,6 +62,14 @@ public class ZunipePackageManager {
     public List<String> getHideApplicationList() {
         try {
             return mService.getHideApplicationList();
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+    }
+
+    public ResolveInfo getResolveInfo(String packageName) {
+        try {
+            return mService.getResolveInfo(packageName);
         } catch (RemoteException ex) {
             throw ex.rethrowFromSystemServer();
         }

@@ -543,6 +543,10 @@ MissingNullability: android.zunipe.VerificationCodeManager#VerificationCodeManag
     Missing nullability on parameter `context` in method `VerificationCodeManager`
 MissingNullability: android.zunipe.ZunipePackageManager#getHideApplicationList():
     Missing nullability on method `getHideApplicationList` return
+MissingNullability: android.zunipe.ZunipePackageManager#getResolveInfo(String):
+    Missing nullability on method `getResolveInfo` return
+MissingNullability: android.zunipe.ZunipePackageManager#getResolveInfo(String) parameter #0:
+    Missing nullability on parameter `packageName` in method `getResolveInfo`
 MissingNullability: android.zunipe.ZunipePackageManager#hideApplication(String) parameter #0:
     Missing nullability on parameter `packageName` in method `hideApplication`
 MissingNullability: android.zunipe.ZunipePackageManager#revealApplication(String) parameter #0:
@@ -1873,6 +1877,8 @@ UnflaggedApi: android.zunipe.ZunipePackageManager:
     New API must be flagged with @FlaggedApi: class android.zunipe.ZunipePackageManager
 UnflaggedApi: android.zunipe.ZunipePackageManager#getHideApplicationList():
     New API must be flagged with @FlaggedApi: method android.zunipe.ZunipePackageManager.getHideApplicationList()
+UnflaggedApi: android.zunipe.ZunipePackageManager#getResolveInfo(String):
+    New API must be flagged with @FlaggedApi: method android.zunipe.ZunipePackageManager.getResolveInfo(String)
 UnflaggedApi: android.zunipe.ZunipePackageManager#hideApplication(String):
     New API must be flagged with @FlaggedApi: method android.zunipe.ZunipePackageManager.hideApplication(String)
 UnflaggedApi: android.zunipe.ZunipePackageManager#revealApplication(String):

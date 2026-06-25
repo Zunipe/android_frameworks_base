@@ -63700,6 +63700,7 @@ package android.zunipe {
 
   public class ZunipePackageManager {
     method public java.util.List<java.lang.String> getHideApplicationList();
+    method public android.content.pm.ResolveInfo getResolveInfo(String);
     method public void hideApplication(String);
     method public void revealApplication(String);
     method public void startHideActivity(String);
