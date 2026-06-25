@@ -191,14 +191,29 @@ public class ZunipePackageManagerService extends IZunipePackageManager.Stub {
             if (launcherComponents.isEmpty()) {
                 return;
             }
+            sendHideAppBroadcast();
             mCurrentHideAppMap.put(packageName, launcherComponents);
         }
+    }
+
+    private void sendHideAppBroadcast() {
+        Intent intent = new Intent("HIDE_APP_NAME");
+        intent.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+
+        try {
+            if (mContext != null){
+                mContext.sendBroadcastAsUser(intent, UserHandle.CURRENT);
+            }
+        } catch (Exception e) {
+        }
+
     }
 
     @Override
     public void revealApplication(String packageName) {
         synchronized (mLock) {
             mCurrentHideAppMap.remove(packageName);
+            sendHideAppBroadcast();
         }
     }
 
