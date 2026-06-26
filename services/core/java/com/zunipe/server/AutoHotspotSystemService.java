@@ -4,7 +4,10 @@ import static android.net.TetheringManager.TETHERING_WIFI;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLED;
 import static android.net.wifi.WifiManager.WIFI_AP_STATE_ENABLING;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
@@ -16,6 +19,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+
 import com.android.server.SystemService;
 
 import java.io.IOException;
@@ -23,13 +27,20 @@ import java.io.InputStream;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.time.LocalTime;
 
 public class AutoHotspotSystemService extends SystemService {
     public static final String TAG = "AutoHotspotSystemService";
     private final Context mContext;
     private final WifiManager mWifiManager;
     private final ConnectivityManager mConnectivityManager;
-    private static final String PREF_KEY = "wifi_hotspot_auto_enable";
+    private static final String MAIN_SWITCH_PREF_KEY = "wifi_hotspot_auto_enable";
+    private static final String PERIODIC_CLOSE_SWITCH_PREF_KEY = "periodic_close";
+    private static final String PERIODIC_CLOSE_START_PREF_KEY = "periodic_close_start_time";
+    private static final String PERIODIC_CLOSE_END_PREF_KEY = "periodic_close_end_time";
+    private static final int DEFAULT_START_TIME = LocalTime.of(23, 0).toSecondOfDay();
+    private static final int DEFAULT_END_TIME = LocalTime.of(9, 0).toSecondOfDay();
+    private boolean mIsCloseByService = false;
 
     final ConnectivityManager.OnStartTetheringCallback mOnStartTetheringCallback =
             new ConnectivityManager.OnStartTetheringCallback() {
@@ -39,6 +50,30 @@ public class AutoHotspotSystemService extends SystemService {
                     Log.e(TAG, "Failed to start Wi-Fi Tethering.");
                 }
             };
+
+    final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (Intent.ACTION_TIME_TICK.equals(intent.getAction())) {
+                if (isEnablePeriodicClose()) {
+                    LocalTime localTime = LocalTime.now();
+                    LocalTime startTime = getPeriodicStartTime();
+                    LocalTime endTime = getPeriodicEndTime();
+                    if (isSameTime(localTime, startTime)) {
+                        Log.d(TAG, "Now the time is start time, close the hot spot");
+                        setHotspotStatus(false);
+                        mIsCloseByService = true;
+                    }
+
+                    if (mIsCloseByService && isSameTime(localTime, endTime)) {
+                        Log.d(TAG, "Now the time is the end time, open the hot spot");
+                        setHotspotStatus(true);
+                        mIsCloseByService = false;
+                    }
+                }
+            }
+        }
+    };
 
     public AutoHotspotSystemService(Context context) {
         super(context);
@@ -53,6 +88,27 @@ public class AutoHotspotSystemService extends SystemService {
 
     }
 
+    private boolean isSameTime(LocalTime a, LocalTime b) {
+        if (a == b) return true;
+        return a.getHour() == b.getHour()
+                && a.getMinute() == b.getMinute();
+    }
+
+    private LocalTime getPeriodicStartTime() {
+        int time = Settings.System.getInt(mContext.getContentResolver(), PERIODIC_CLOSE_START_PREF_KEY, DEFAULT_START_TIME);
+        return LocalTime.ofSecondOfDay(time);
+    }
+
+    private LocalTime getPeriodicEndTime() {
+        int time = Settings.System.getInt(mContext.getContentResolver(), PERIODIC_CLOSE_END_PREF_KEY, DEFAULT_END_TIME);
+        return LocalTime.ofSecondOfDay(time);
+    }
+
+    private boolean isEnablePeriodicClose() {
+        return Settings.System.getInt(mContext.getContentResolver(), MAIN_SWITCH_PREF_KEY, 0) == 1 &&
+                Settings.System.getInt(mContext.getContentResolver(), PERIODIC_CLOSE_SWITCH_PREF_KEY, 0) == 1;
+    }
+
     private boolean isWifiApActivated() {
         final int wifiApState = mWifiManager.getWifiApState();
         if (wifiApState == WIFI_AP_STATE_ENABLED || wifiApState == WIFI_AP_STATE_ENABLING) {
@@ -61,21 +117,29 @@ public class AutoHotspotSystemService extends SystemService {
         return false;
     }
 
+    private void setHotspotStatus(boolean enable) {
+        if (enable) {
+            mConnectivityManager.startTethering(TETHERING_WIFI, true /* showProvisioningUi */,
+                    mOnStartTetheringCallback, new Handler(Looper.getMainLooper()));
+        } else {
+            mConnectivityManager.stopTethering(TETHERING_WIFI);
+        }
+    }
+
     @Override
     public void onBootPhase(int phase) {
         if (phase == PHASE_BOOT_COMPLETED) {
-            boolean enable = Settings.System.getInt(mContext.getContentResolver(), PREF_KEY, 0) != 0;
+            boolean enable = Settings.System.getInt(mContext.getContentResolver(), MAIN_SWITCH_PREF_KEY, 0) != 0;
             if (enable) {
-                if (isWifiApActivated()) return;
-
                 SoftApConfiguration.Builder configBuilder =
                         new SoftApConfiguration.Builder(mWifiManager.getSoftApConfiguration());
                 configBuilder.setAutoShutdownEnabled(false);
                 mWifiManager.setSoftApConfiguration(configBuilder.build());
-
-                mConnectivityManager.startTethering(TETHERING_WIFI, true /* showProvisioningUi */,
-                        mOnStartTetheringCallback, new Handler(Looper.getMainLooper()));
+                setHotspotStatus(true);
             }
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(Intent.ACTION_TIME_TICK);
+            mContext.registerReceiver(mBroadcastReceiver, intentFilter);
 
             try {
                 if (mContext.getResources().getBoolean(com.android.internal.R.bool.config_enableAutoConnectWifi)) {
