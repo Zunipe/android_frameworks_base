@@ -337,13 +337,6 @@ public class AudioService extends IAudioService.Stub
             AudioSystemAdapter.OnVolRangeInitRequestListener {
 
     private static final String TAG = "AS.AudioService";
-    private final static int[] LINKED_STREAMS = {
-            AudioManager.STREAM_NOTIFICATION,
-            AudioManager.STREAM_VOICE_CALL,
-            AudioManager.STREAM_MUSIC
-    };
-    private final float[] mPercentArray = new float[25];
-    private final int[] mRemainArray = new int[25];
 
     private final AudioSystemAdapter mAudioSystem;
     private final SystemServerAdapter mSystemServer;
@@ -4349,98 +4342,6 @@ public class AudioService extends IAudioService.Stub
                     }
                 }
 
-                if (streamType == AudioManager.STREAM_MUSIC ||
-                        streamType == AudioManager.STREAM_NOTIFICATION ||
-                        streamType == AudioManager.STREAM_VOICE_CALL) {
-                    if (direction == AudioManager.ADJUST_RAISE
-                            || direction == AudioManager.ADJUST_LOWER) {
-                        Consumer<Integer> sweeper = i -> {
-                            mPercentArray[i] = 0;
-                            mRemainArray[i] = 0;
-                        };
-                        int targetStreamType = -100, minRemain = Integer.MAX_VALUE;
-                        for (int linkedStream : LINKED_STREAMS) {
-                            int linkedAlias = sStreamVolumeAlias.get(linkedStream, -1);
-                            VolumeStreamState linkedVss = getVssForStreamOrDefault(linkedAlias);
-
-                            int linkedDevice = getDeviceForStream(linkedAlias);
-                            if (linkedDevice == AudioSystem.DEVICE_NONE) {
-                                linkedDevice = deviceType;
-                            }
-
-                            if (linkedVss == streamState) {
-                                sweeper.accept(linkedStream);
-                                continue;
-                            }
-
-                            if ((originStreamIndex == streamState.getMaxIndex() && direction == AudioManager.ADJUST_RAISE) ||
-                                    (originStreamIndex == streamState.getMinIndex() && direction == AudioManager.ADJUST_LOWER)) {
-                                int remain = direction == AudioManager.ADJUST_RAISE ?
-                                        linkedVss.mIndexMax - linkedVss.getIndex(linkedDevice) :
-                                        linkedVss.getIndex(linkedDevice) - linkedVss.mIndexMin;
-                                if (remain != 0 && remain < minRemain) {
-                                    minRemain = remain;
-                                    targetStreamType = linkedStream;
-                                }
-                                continue;
-                            }
-
-                            int targetIndex = linkedVss.getIndex(linkedDevice);
-
-                            if ((direction == AudioManager.ADJUST_RAISE && mPercentArray[linkedStream] <= 0) ||
-                                    (direction == AudioManager.ADJUST_LOWER && mPercentArray[linkedStream] >= 0)) {
-                                sweeper.accept(linkedStream);
-                            }
-                            if (mRemainArray[linkedStream] == 0) {
-                                mRemainArray[linkedStream] = direction == AudioManager.ADJUST_RAISE ?
-                                        streamState.mIndexMax - originStreamIndex :
-                                        originStreamIndex - streamState.mIndexMin;
-                            }
-                            int remain = mRemainArray[linkedStream];
-                            int change = streamState.getIndex(deviceType) * direction - originStreamIndex * direction;
-                            float percent = 1.0f * change / remain;
-
-                            if (percent >= 1F) {
-                                targetIndex = direction == AudioManager.ADJUST_RAISE ?
-                                        linkedVss.getMaxIndex() : linkedVss.getMinIndex();
-                                sweeper.accept(linkedStream);
-                            } else {
-                                mPercentArray[linkedStream] += direction == AudioManager.ADJUST_RAISE ?
-                                        (linkedVss.getMaxIndex() - linkedVss.getIndex(linkedDevice)) * percent :
-                                        (linkedVss.getMinIndex() - linkedVss.getIndex(linkedDevice)) * percent;
-                                Log.d("phf", "linkedStream = " + linkedStream + " linkedDevice = " + linkedDevice + " deviceType = " + deviceType +
-                                        " linkedAlias = " + linkedAlias);
-                                if (Math.abs(mPercentArray[linkedStream]) >= 10) {
-                                    targetIndex = (int) mPercentArray[linkedStream] / 10 * 10 + linkedVss.getIndex(linkedDevice);
-                                    targetIndex = Math.max(linkedVss.getMinIndex(), Math.min(linkedVss.getMaxIndex(), targetIndex));
-                                    sweeper.accept(linkedStream);
-                                    Log.d("phf", "linkedStream = " + linkedStream + " targetIndex = " + targetIndex + " step = " + step);
-                                }
-                            }
-
-                            if (linkedVss.setIndex(targetIndex, linkedDevice, caller,
-                                    hasModifyAudioSettings) || linkedVss.mIsMuted) {
-                                if (linkedVss.mIsMuted
-                                        && targetIndex > linkedVss.getMinIndex()) {
-                                    muteAliasStreams(linkedAlias, false);
-                                }
-
-                                sendMsg(mAudioHandler,
-                                        MSG_SET_DEVICE_VOLUME,
-                                        SENDMSG_QUEUE,
-                                        linkedDevice,
-                                        0,
-                                        linkedVss,
-                                        0);
-                            }
-                        }
-                        if (targetStreamType != -100) {
-                            adjustStreamVolume(targetStreamType, direction, flags, ada, callingPackage, caller, uid, pid, attributionTag, hasModifyAudioSettings, keyEventMode);
-                            return;
-                        }
-                    }
-                }
-
                 sendMsg(mAudioHandler,
                         MSG_SET_DEVICE_VOLUME,
                         SENDMSG_QUEUE,
@@ -5815,8 +5716,6 @@ public class AudioService extends IAudioService.Stub
                             && !isFullVolumeDevice(deviceType));
         }
         index = streamState.getIndex(deviceType);
-        Arrays.fill(mPercentArray, 0);
-        Arrays.fill(mRemainArray, 0);
 
         handleAbsoluteVolume(streamType, streamTypeAlias, deviceAttr, index, streamState.mIsMuted,
                 flags);
