@@ -30,7 +30,7 @@ public class PerfBoostControllerImpl implements PerfBoostController {
             public void onChange(boolean selfChange) {
                 super.onChange(selfChange);
                 mEnable = secureSettings.getBool(SETTING_KEY, false);
-//                mGameModeManager.setPerfBoost(mEnable);
+                mGameModeManager.setPerfBoost(mEnable);
             }
         };
 

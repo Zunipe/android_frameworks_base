@@ -30,6 +30,19 @@ public class GameModeManagerService extends IGameModeManager.Stub {
     }
 
     @Override
+    public void setPerfBoost(boolean enable) {
+        try {
+            if (enable) {
+                getIPerf().perfLockAcq(0, 0, new int[]{1}, 0);
+            } else {
+                getIPerf().perfLockRel(0);
+            }
+        } catch (RemoteException e) {
+            Slog.d("GameModeManagerService", "failed to invoke perfHal", e);
+        }
+    }
+
+    @Override
     public int getCpuFreq(int i) {
         if (i >= 0 && i <= 7) {
             try {

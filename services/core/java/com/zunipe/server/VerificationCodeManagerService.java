@@ -51,9 +51,12 @@ public class VerificationCodeManagerService extends IVerificationCodeManager.Stu
         Notification notification = sbn.getNotification();
         Bundle extras = notification.extras;
         String text = (String) extras.getCharSequence(Notification.EXTRA_TEXT);
+        if (text == null) {
+            return;
+        }
         Pattern pattern = Pattern.compile(CODE_REGEX);
         Matcher matcher = pattern.matcher(text);
-        if (text == null || !matcher.find()) {
+        if (!matcher.find()) {
             return;
         }
 

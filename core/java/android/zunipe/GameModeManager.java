@@ -31,12 +31,23 @@ public class GameModeManager {
         return sInstance;
     }
 
-    /**
+	/**
      * @hide
      */
     public int getCpuFreq(int core) {
         try {
             return mService.getCpuFreq(core);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+    }
+
+    /**
+     * @hide
+     */
+    public void setPerfBoost(boolean enable) {
+        try {
+            mService.setPerfBoost(enable);
         } catch (RemoteException ex) {
             throw ex.rethrowFromSystemServer();
         }

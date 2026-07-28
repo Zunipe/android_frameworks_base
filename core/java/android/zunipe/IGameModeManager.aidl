@@ -7,4 +7,5 @@ interface IGameModeManager {
     int getCpuThermal(int core);
     int getGpuThermal();
     int getBatteryThermal();
+	void setPerfBoost(boolean enable);
 }
